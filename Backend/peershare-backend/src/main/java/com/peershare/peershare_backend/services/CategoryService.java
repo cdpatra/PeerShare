@@ -2,19 +2,19 @@ package com.peershare.peershare_backend.services;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import com.peershare.peershare_backend.payloads.CategoryDto;
 
-import com.peershare.peershare_backend.dao.CategoryRepository;
-import com.peershare.peershare_backend.entities.Category;
+public interface CategoryService {
 
-@Service
-public class CategoryService {
+   public List<CategoryDto> getAllCategories();
 
-   @Autowired
-   private CategoryRepository categoryRepository;
+   public CategoryDto getCategoryById(int id);
 
-   public List<Category> getAllCategories() {
-      return (List<Category>) categoryRepository.findAll();
-   }
+   public CategoryDto addCategory(CategoryDto categoryDto);
+
+   public void deleteCategoryById(int id);
+
+   public void deleteAllCategories();
+
+   public CategoryDto updateCategoryById(CategoryDto updatedCategoryDto, int id);
 }

@@ -59,6 +59,21 @@
             <optional>true</optional>
         </dependency>
 
+        <!-- Lombok Dependency -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
+        <!-- ModelMapper Dependency -->
+        <dependency>
+            <groupId>org.modelmapper</groupId>
+            <artifactId>modelmapper</artifactId>
+            <version>3.2.1</version>
+        </dependency>
+
+        
         <!-- Tomcat server -->
         <dependency>
             <groupId>org.springframework.boot</groupId>

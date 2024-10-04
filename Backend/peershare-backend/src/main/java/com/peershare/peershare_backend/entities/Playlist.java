@@ -5,7 +5,17 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@ToString
 @Entity
 public class Playlist {
 
@@ -19,73 +29,5 @@ public class Playlist {
 
    @ManyToOne
    private Category category;
-
-   public Playlist() {
-   }
-
-   public Playlist(String playlistId, int noOfLectures, String instructorChannelName, double review, String playlistURL,
-         Category category) {
-      this.playlistId = playlistId;
-      this.noOfLectures = noOfLectures;
-      this.instructorChannelName = instructorChannelName;
-      this.review = review;
-      this.playlistURL = playlistURL;
-      this.category = category;
-   }
-
-   public String getPlaylistId() {
-      return playlistId;
-   }
-
-   public void setPlaylistId(String playlistId) {
-      this.playlistId = playlistId;
-   }
-
-   public int getNoOfLectures() {
-      return noOfLectures;
-   }
-
-   public void setNoOfLectures(int noOfLectures) {
-      this.noOfLectures = noOfLectures;
-   }
-
-   public String getInstructorChannelName() {
-      return instructorChannelName;
-   }
-
-   public void setInstructorChannelName(String instructorChannelName) {
-      this.instructorChannelName = instructorChannelName;
-   }
-
-   public double getReview() {
-      return review;
-   }
-
-   public void setReview(double review) {
-      this.review = review;
-   }
-
-   public String getPlaylistURL() {
-      return playlistURL;
-   }
-
-   public void setPlaylistURL(String playlistURL) {
-      this.playlistURL = playlistURL;
-   }
-
-   public Category getCategory() {
-      return category;
-   }
-
-   public void setCategory(Category category) {
-      this.category = category;
-   }
-
-   @Override
-   public String toString() {
-      return "Playlist [playlistId=" + playlistId + ", noOfLectures=" + noOfLectures + ", instructorChannelName="
-            + instructorChannelName + ", review=" + review + ", playlistURL=" + playlistURL + ", category=" + category
-            + "]";
-   }
 
 }
