@@ -1,5 +1,6 @@
 package com.peershare.peershare_backend.services.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -7,9 +8,14 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.peershare.peershare_backend.entities.Category;
+import com.peershare.peershare_backend.entities.Playlist;
 import com.peershare.peershare_backend.entities.Student;
 import com.peershare.peershare_backend.exceptions.ResourceNotFoundException;
+import com.peershare.peershare_backend.payloads.PlaylistDto;
 import com.peershare.peershare_backend.payloads.StudentDto;
+import com.peershare.peershare_backend.repositories.CategoryRepository;
+import com.peershare.peershare_backend.repositories.PlaylistRepository;
 import com.peershare.peershare_backend.repositories.StudentRepository;
 import com.peershare.peershare_backend.services.StudentService;
 
@@ -18,6 +24,12 @@ public class StudentServiceImpl implements StudentService {
 
    @Autowired
    StudentRepository studentRepository;
+
+   @Autowired
+   PlaylistRepository playlistRepository;
+
+   @Autowired
+   CategoryRepository categoryRepository;
 
    @Autowired
    ModelMapper modelMapper;
@@ -66,12 +78,53 @@ public class StudentServiceImpl implements StudentService {
       return studentToDto(updatedStudent);
    }
 
+   // Add playlist to the student entity;
+   @Override
+   public void addPlaylist(String studentId, String playlistId) {
+      Student student = this.studentRepository.findById(studentId)
+            .orElseThrow(() -> new ResourceNotFoundException("Student", "id", studentId));
+      Playlist playlist = this.playlistRepository.findById(playlistId)
+            .orElseThrow(() -> new ResourceNotFoundException("Playlist", "id", playlistId));
+      student.addPlaylist(playlist);
+      this.studentRepository.save(student);
+   }
+
    private StudentDto studentToDto(Student student) {
-      return this.modelMapper.map(student, StudentDto.class);
+      StudentDto studentDto = this.modelMapper.map(student, StudentDto.class);
+
+      List<PlaylistDto> myPlaylistDtos = new ArrayList<>();
+
+      if (!student.getMyPlaylists().isEmpty()) {
+         myPlaylistDtos = student.getMyPlaylists().stream()
+               .map((playlist) -> {
+                  PlaylistDto playlistDto = modelMapper.map(playlist, PlaylistDto.class);
+                  playlistDto.setCategoryId(playlist.getCategory().getCategoryId());
+                  playlistDto.setCategoryName(playlist.getCategory().getCategoryName());
+                  return playlistDto;
+               }).collect(Collectors.toList());
+      }
+
+      studentDto.setMyPlaylistsDtos(myPlaylistDtos);
+      return studentDto;
    }
 
    private Student dtoToStudent(StudentDto studentDto) {
-      return this.modelMapper.map(studentDto, Student.class);
-   }
 
+      Student student = this.modelMapper.map(studentDto, Student.class);
+
+      List<Playlist> myPlaylists = new ArrayList<>();
+
+      if (!studentDto.getMyPlaylistsDtos().isEmpty()) {
+         myPlaylists = studentDto.getMyPlaylistsDtos().stream().map((playlistDto) -> {
+            Playlist playlist = this.modelMapper.map(playlistDto, Playlist.class);
+            Category category = this.categoryRepository.findById(playlistDto.getCategoryId())
+                  .orElseThrow(() -> new ResourceNotFoundException("Category", "id", playlistDto.getCategoryId()));
+            playlist.setCategory(category);
+            return playlist;
+         }).collect(Collectors.toList());
+      }
+
+      student.setMyPlaylists(myPlaylists);
+      return student;
+   }
 }

@@ -1,6 +1,8 @@
 package com.peershare.peershare_backend.controllers;
 
 import java.util.List;
+import java.util.Map;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -12,8 +14,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.peershare.peershare_backend.exceptions.ResourceNotFoundException;
+import com.peershare.peershare_backend.payloads.ApiResponse;
 import com.peershare.peershare_backend.payloads.StudentDto;
 import com.peershare.peershare_backend.services.StudentService;
 
@@ -47,16 +52,18 @@ public class StudentController {
 
    // Handler to delete single student by its id;
    @DeleteMapping("/student/{id}")
-   public ResponseEntity<?> deleteStudentById(@PathVariable String id) {
+   public ResponseEntity<ApiResponse> deleteStudentById(@PathVariable String id) {
       this.studentService.deleteStudent(id);
-      return new ResponseEntity<>(HttpStatus.OK);
+      ApiResponse apiResponse = new ApiResponse("Student deleted successfully", true);
+      return new ResponseEntity<>(apiResponse, HttpStatus.OK);
    }
 
    // Handler to delete all students;
    @DeleteMapping("/student")
-   public ResponseEntity<?> deleteAllStudents() {
+   public ResponseEntity<ApiResponse> deleteAllStudents() {
       this.studentService.deleteAllStudents();
-      return new ResponseEntity<>(HttpStatus.OK);
+      ApiResponse apiResponse = new ApiResponse("All students deleted successfully", true);
+      return new ResponseEntity<>(apiResponse, HttpStatus.OK);
    }
 
    // Handler to update a single student by its id;
@@ -64,5 +71,18 @@ public class StudentController {
    public ResponseEntity<StudentDto> updateStudent(@RequestBody StudentDto updatedStudentDto, @PathVariable String id) {
       StudentDto updateStudent = this.studentService.updateStudent(updatedStudentDto, id);
       return new ResponseEntity<>(updateStudent, HttpStatus.OK);
+   }
+
+   // Handler to add playlist to a particular student
+   @PutMapping("/student/add-playlist")
+   public ResponseEntity<ApiResponse> addPlaylistByStudentIdAndPlaylistId(
+         @RequestParam Map<String, String> studentIdAndPlaylistIdMap) {
+      String studentId = Optional.ofNullable(studentIdAndPlaylistIdMap.get("studentId"))
+            .orElseThrow(() -> new ResourceNotFoundException("Student ID", "key value", "studentId"));
+      String playlistId = Optional.ofNullable(studentIdAndPlaylistIdMap.get("playlistId"))
+            .orElseThrow(() -> new ResourceNotFoundException("Playlist ID", "key value", "playlistId"));
+      this.studentService.addPlaylist(studentId, playlistId);
+      ApiResponse apiResponse = new ApiResponse("Playlist added successfully", true);
+      return new ResponseEntity<>(apiResponse, HttpStatus.OK);
    }
 }

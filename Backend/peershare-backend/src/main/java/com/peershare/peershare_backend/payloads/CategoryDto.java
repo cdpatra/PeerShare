@@ -1,8 +1,7 @@
 package com.peershare.peershare_backend.payloads;
 
+import java.util.ArrayList;
 import java.util.List;
-
-import com.peershare.peershare_backend.entities.Playlist;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -17,5 +16,5 @@ public class CategoryDto {
    private int categoryId;
    private String categoryName;
    private String thumbnail;
-   private List<Playlist> playlists;
+   private List<PlaylistDto> playlistsDtos = new ArrayList<>();
 }

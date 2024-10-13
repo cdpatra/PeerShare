@@ -22,4 +22,7 @@ public interface StudentService {
 
    // Update single student
    StudentDto updateStudent(StudentDto updatedStudentDto, String id);
+
+   // Add playlist
+   void addPlaylist(String studentId, String playlistId);
 }

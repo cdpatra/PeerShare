@@ -1,5 +1,6 @@
 package com.peershare.peershare_backend.services.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -8,8 +9,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.peershare.peershare_backend.entities.Category;
+import com.peershare.peershare_backend.entities.Playlist;
 import com.peershare.peershare_backend.exceptions.ResourceNotFoundException;
 import com.peershare.peershare_backend.payloads.CategoryDto;
+import com.peershare.peershare_backend.payloads.PlaylistDto;
 import com.peershare.peershare_backend.repositories.CategoryRepository;
 import com.peershare.peershare_backend.services.CategoryService;
 
@@ -36,9 +39,7 @@ public class CategoryServiceImpl implements CategoryService {
 
    @Override
    public void deleteCategoryById(int id) {
-      Category originalCategory = this.categoryRepository.findById(id)
-            .orElseThrow(() -> new ResourceNotFoundException("Category", "id", id));
-      this.categoryRepository.delete(originalCategory);
+      this.categoryRepository.deleteById(id);
    }
 
    @Override
@@ -63,7 +64,7 @@ public class CategoryServiceImpl implements CategoryService {
 
       originalCategory.setCategoryName(updatedCategoryDto.getCategoryName());
       originalCategory.setThumbnail(updatedCategoryDto.getThumbnail());
-      originalCategory.setPlaylists(updatedCategoryDto.getPlaylists());
+      originalCategory.setPlaylists(playlistDtosToPlaylists(updatedCategoryDto.getPlaylistsDtos()));
 
       Category updatedCategory = this.categoryRepository.save(originalCategory);
       return categoryToDto(updatedCategory);
@@ -72,21 +73,41 @@ public class CategoryServiceImpl implements CategoryService {
    // We can also use model mapper instead of the following methods
    public Category dtoToCategory(CategoryDto categoryDto) {
       Category category = this.modelMapper.map(categoryDto, Category.class);
-      // Category category = new Category();
-      // category.setCategoryName(categoryDto.getCategoryName());
-      // category.setThumbnail(categoryDto.getThumbnail());
-      // category.setPlaylists(categoryDto.getPlaylists());
+      List<Playlist> playlists = playlistDtosToPlaylists(categoryDto.getPlaylistsDtos());
+      category.setPlaylists(playlists);
       return category;
    }
 
    public CategoryDto categoryToDto(Category category) {
       CategoryDto categoryDto = this.modelMapper.map(category, CategoryDto.class);
-      // CategoryDto categoryDto = new CategoryDto();
-      // categoryDto.setCategoryId(category.getCategoryId());
-      // categoryDto.setCategoryName(category.getCategoryName());
-      // categoryDto.setThumbnail(category.getThumbnail());
-      // categoryDto.setPlaylists(category.getPlaylists());
+      List<PlaylistDto> playlistDtos = playlistsToPlaylistDtos(category.getPlaylists());
+      categoryDto.setPlaylistsDtos(playlistDtos);
       return categoryDto;
+   }
+
+   private List<Playlist> playlistDtosToPlaylists(List<PlaylistDto> playlistDtos) {
+      if (playlistDtos.isEmpty())
+         return new ArrayList<>();
+      else
+         return playlistDtos.stream().map((playlistDto) -> {
+            Playlist playlist = this.modelMapper.map(playlistDtos, Playlist.class);
+            Category category = this.categoryRepository.findById(playlistDto.getCategoryId())
+                  .orElseThrow(() -> new ResourceNotFoundException("Category", "id", playlistDto.getCategoryId()));
+            playlist.setCategory(category);
+            return playlist;
+         }).collect(Collectors.toList());
+   }
+
+   private List<PlaylistDto> playlistsToPlaylistDtos(List<Playlist> playlists) {
+      if (playlists.isEmpty())
+         return new ArrayList<>();
+      else
+         return playlists.stream().map((playlist) -> {
+            PlaylistDto playlistDto = this.modelMapper.map(playlist, PlaylistDto.class);
+            playlistDto.setCategoryId(playlist.getCategory().getCategoryId());
+            playlistDto.setCategoryName(playlist.getCategory().getCategoryName());
+            return playlistDto;
+         }).collect(Collectors.toList());
    }
 
 }
