@@ -2,11 +2,14 @@ package com.peershare.peershare_backend.entities;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToMany;
@@ -43,4 +46,10 @@ public class Student implements Serializable {
       this.myPlaylists.add(playlist);
    }
 
+   @ManyToMany(cascade=CascadeType.ALL,fetch=FetchType.EAGER)
+   private Set<Roles> roles = new HashSet<>();
+
+   public void addRole(Roles role){
+      this.roles.add(role);
+   }
 }

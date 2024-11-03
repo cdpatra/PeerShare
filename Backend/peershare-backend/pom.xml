@@ -81,6 +81,13 @@
             <scope>provided</scope>
         </dependency>
 
+        <!-- Spring Security Dependency -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-security</artifactId>
+        </dependency>
+
+
         <!-- Testing Dependency -->
         <dependency>
             <groupId>org.springframework.boot</groupId>

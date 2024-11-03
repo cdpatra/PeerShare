@@ -6,18 +6,22 @@ import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.peershare.peershare_backend.entities.Category;
 import com.peershare.peershare_backend.entities.Playlist;
+import com.peershare.peershare_backend.entities.Roles;
 import com.peershare.peershare_backend.entities.Student;
 import com.peershare.peershare_backend.exceptions.ResourceNotFoundException;
 import com.peershare.peershare_backend.payloads.PlaylistDto;
 import com.peershare.peershare_backend.payloads.StudentDto;
 import com.peershare.peershare_backend.repositories.CategoryRepository;
 import com.peershare.peershare_backend.repositories.PlaylistRepository;
+import com.peershare.peershare_backend.repositories.RolesRepository;
 import com.peershare.peershare_backend.repositories.StudentRepository;
 import com.peershare.peershare_backend.services.StudentService;
+import com.peershare.peershare_backend.utils.AppConstants;
 
 @Service
 public class StudentServiceImpl implements StudentService {
@@ -33,6 +37,12 @@ public class StudentServiceImpl implements StudentService {
 
    @Autowired
    ModelMapper modelMapper;
+
+   @Autowired
+   RolesRepository rolesRepository;
+
+   @Autowired
+   PasswordEncoder passwordEncoder;
 
    // Getting single student by id
    @Override
@@ -54,8 +64,18 @@ public class StudentServiceImpl implements StudentService {
    // Creating a single student
    @Override
    public StudentDto addStudent(StudentDto studentDto) {
-      Student student = this.studentRepository.save(dtoToStudent(studentDto));
-      return studentToDto(student);
+      Student student = dtoToStudent(studentDto);
+
+      // setting the default user role
+      Roles role = this.rolesRepository.findById(AppConstants.ROLE_USER_ID)
+            .orElseThrow(() -> new ResourceNotFoundException("Role", "Role ID", AppConstants.ROLE_USER_ID));
+      student.addRole(role);
+      
+      // encoding the password
+      student.setPassword(this.passwordEncoder.encode(student.getPassword()));
+
+      Student registeredStudent = this.studentRepository.save(student);
+      return studentToDto(registeredStudent);
    }
 
    // Deleting single student by id
