@@ -55,7 +55,7 @@ export default function CanvasBackground() {
          context.stroke();
       };
 
-      wrapperRef.current.addEventListener("mousemove", (event) => {
+      window.addEventListener("mousemove", (event) => {
          mouse.x = event.x;
          mouse.y = event.y;
          console.log(mouse);
