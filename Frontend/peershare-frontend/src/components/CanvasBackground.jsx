@@ -73,7 +73,7 @@ export default function CanvasBackground() {
 
    return (
       <div ref={wrapperRef} className="wrapper relative overflow-hidden dark:text-white">
-         <canvas ref={canvasRef} className="block bg-slate-900" />
+         <canvas ref={canvasRef} className="block  bg-primaryDark" />
          <div className="website-name select-none cursor-default absolute top-[45%] left-1/2 -translate-x-1/2 text-9xl font-playWrite flex flex-nowrap">
             PeerShare
             <span className="inline-block text-[200px] text-logoGreen -mt-20 -ml-2">.</span>

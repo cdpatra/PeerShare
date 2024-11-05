@@ -9,9 +9,12 @@ export default {
          colors: {
             logoGreen: "#b7d118",
             logoLightGreen: "#e4f57d",
+            logoDarkGreen: "#85990d",
+            primaryDark: "#0f172a",
+            textDark: "white",
+            textLight: "black",
          },
       },
    },
    plugins: [],
 };
-
