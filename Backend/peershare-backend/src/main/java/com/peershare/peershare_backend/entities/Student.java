@@ -6,7 +6,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
@@ -44,22 +43,18 @@ public class Student implements Serializable {
    @Lob
    private String description;
 
-   @ManyToMany(cascade = CascadeType.ALL)
+   @ManyToMany(fetch = FetchType.EAGER)
    private List<Playlist> myPlaylists = new ArrayList<>();
 
    public void addPlaylist(Playlist playlist) {
       this.myPlaylists.add(playlist);
    }
 
-   @ManyToMany(cascade=CascadeType.ALL,fetch=FetchType.EAGER)
-   @JoinTable(
-       name = "student_roles",
-       joinColumns = @JoinColumn(name = "student_id"),
-       inverseJoinColumns = @JoinColumn(name = "role_id")
-   )
+   @ManyToMany(fetch = FetchType.EAGER)
+   @JoinTable(name = "student_roles", joinColumns = @JoinColumn(name = "student_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
    private Set<Roles> roles = new HashSet<>();
 
-   public void addRole(Roles role){
+   public void addRole(Roles role) {
       this.roles.add(role);
    }
 }

@@ -8,9 +8,9 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.peershare.peershare_backend.payloads.JWTRequest;
@@ -20,6 +20,7 @@ import com.peershare.peershare_backend.security.JWTHelper;
 import com.peershare.peershare_backend.services.StudentService;
 
 @RestController
+@RequestMapping("/auth")
 public class AuthController {
 
   @Autowired
@@ -46,7 +47,7 @@ public class AuthController {
 
   }
 
-  @GetMapping("/auth/login")
+  @PostMapping("/login")
   public ResponseEntity<JWTResponse> loginHandler(@RequestBody JWTRequest jwtRequest) {
     this.doAuthenticate(jwtRequest.getEmail(), jwtRequest.getPassword());
     UserDetails userDetails = userDetailsService.loadUserByUsername(jwtRequest.getEmail());
@@ -56,7 +57,7 @@ public class AuthController {
     return new ResponseEntity<>(response, HttpStatus.OK);
   }
 
-  @PostMapping("/auth/register")
+  @PostMapping("/register")
   public ResponseEntity<StudentDto> addStudent(@RequestBody StudentDto studentDto) {
     StudentDto student = this.studentService.addStudent(studentDto);
     return new ResponseEntity<>(student, HttpStatus.CREATED);
