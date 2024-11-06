@@ -2,6 +2,7 @@ package com.peershare.peershare_backend.exceptions;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -15,5 +16,13 @@ public class GlobalExceptionHandler {
       String message = exception.getMessage();
       ApiResponse apiResponse = new ApiResponse(message, false);
       return new ResponseEntity<>(apiResponse, HttpStatus.NOT_FOUND);
+   }
+
+   // JWT exceptions
+   @ExceptionHandler(BadCredentialsException.class)
+   public ResponseEntity<ApiResponse> badCredentialsExceptionHandler(BadCredentialsException exception) {
+      String message = exception.getMessage();
+      ApiResponse apiResponse = new ApiResponse(message, false);
+      return new ResponseEntity<>(apiResponse, HttpStatus.UNAUTHORIZED);
    }
 }

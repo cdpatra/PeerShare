@@ -8,9 +8,12 @@ import java.util.Set;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
+import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
 import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
@@ -34,6 +37,8 @@ public class Student implements Serializable {
    private String graduationYear;
    private String collegeName;
    private String profilePhoto;
+
+   @ElementCollection
    private List<String> skills = new ArrayList<>();
 
    @Lob
@@ -47,6 +52,11 @@ public class Student implements Serializable {
    }
 
    @ManyToMany(cascade=CascadeType.ALL,fetch=FetchType.EAGER)
+   @JoinTable(
+       name = "student_roles",
+       joinColumns = @JoinColumn(name = "student_id"),
+       inverseJoinColumns = @JoinColumn(name = "role_id")
+   )
    private Set<Roles> roles = new HashSet<>();
 
    public void addRole(Roles role){
