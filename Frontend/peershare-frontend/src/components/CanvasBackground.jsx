@@ -58,7 +58,6 @@ export default function CanvasBackground() {
       window.addEventListener("mousemove", (event) => {
          mouse.x = event.x;
          mouse.y = event.y;
-         console.log(mouse);
       });
 
       const animate = () => {
@@ -68,7 +67,6 @@ export default function CanvasBackground() {
          drawLines();
       };
       animate();
-      console.dir(canvas);
    }, []);
 
    return (

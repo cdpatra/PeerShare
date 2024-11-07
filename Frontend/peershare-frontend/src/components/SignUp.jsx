@@ -1,4 +1,22 @@
+import { useState } from "react";
+import { Link } from "react-router-dom";
 export default function SignUp() {
+   const [student, setStudent] = useState({
+      rollNo: "",
+      firstName: "",
+      lastName: "",
+      email: "",
+      password: "",
+      graduationYear: "",
+      collegeName: "",
+      profilePhoto: "",
+      skills: [],
+      description: "",
+   });
+   const inputHandler = (key, value) => {
+      setStudent({ ...student, [key]: value });
+   };
+   console.log(student);
    return (
       <section className="bg-gray-50 dark:bg-gray-900">
          <div className="flex flex-col items-center justify-end px-6 py-8 mx-auto lg:py-0">
@@ -19,9 +37,11 @@ export default function SignUp() {
                               type="text"
                               name="collegeName"
                               id="college-name"
+                              onChange={(event) => inputHandler("collegeName", event.target.value)}
+                              value={student.collegeName}
                               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block  p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 w-full dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                               placeholder="College Name"
-                              required="true"
+                              required={true}
                            />
                         </div>
                         <div className="w-full">
@@ -34,9 +54,11 @@ export default function SignUp() {
                               type="text"
                               name="rollNo"
                               id="college-roll"
+                              onChange={(event) => inputHandler("rollNo", event.target.value)}
+                              value={student.rollNo}
                               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block  p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 w-full dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                               placeholder="College Roll no'"
-                              required="true"
+                              required={true}
                            />
                         </div>
                      </div>
@@ -51,9 +73,11 @@ export default function SignUp() {
                            type="email"
                            name="email"
                            id="email"
+                           onChange={(event) => inputHandler("email", event.target.value)}
+                           value={student.email}
                            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                            placeholder="name@company.com"
-                           required=""
+                           required={true}
                         />
                      </div>
                      <div>
@@ -67,8 +91,10 @@ export default function SignUp() {
                            name="password"
                            id="password"
                            placeholder="••••••••"
+                           onChange={(event) => inputHandler("password", event.target.value)}
+                           value={student.password}
                            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                           required=""
+                           required={true}
                         />
                      </div>
                      <div>
@@ -78,12 +104,12 @@ export default function SignUp() {
                            Confirm password
                         </label>
                         <input
-                           type="confirm-password"
+                           type="password"
                            name="confirm-password"
                            id="confirm-password"
                            placeholder="••••••••"
                            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                           required="true"
+                           required={true}
                         />
                      </div>
                      <div className="extra-information flex gap-2">
@@ -97,9 +123,11 @@ export default function SignUp() {
                               type="number"
                               name="graduationYear"
                               id="graduation-year"
+                              onChange={(event) => inputHandler("graduationYear", event.target.value)}
+                              value={student.graduationYear}
                               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block  p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 w-full dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                              placeholder="First Name"
-                              required="true"
+                              placeholder="Year of Graduation"
+                              required={true}
                            />
                         </div>
                         <div className="w-full">
@@ -109,13 +137,29 @@ export default function SignUp() {
                               Upload Your Profile Photo
                            </label>
                            <input
-                            name="profilePhoto"
+                              name="profilePhoto"
                               className=" p-2 block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-600"
                               id="file_input"
                               type="file"
                            />
                         </div>
                      </div>
+                     <div>
+                        <label
+                           htmlFor="description"
+                           className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                           Write something about yourself
+                        </label>
+                        <textarea
+                           id="description"
+                           rows={4}
+                           onChange={(event)=> inputHandler("description",event.target.value)}
+                           value={student.description}
+                           className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                           placeholder="Write here..."
+                        />
+                     </div>
+
                      <div className="flex items-start">
                         <div className="flex items-center h-5">
                            <input
@@ -123,7 +167,7 @@ export default function SignUp() {
                               aria-describedby="terms"
                               type="checkbox"
                               className="w-4 h-4 border border-gray-300 rounded bg-gray-50 focus:ring-3 focus:ring-primary-300 dark:bg-gray-700 dark:border-gray-600 dark:focus:ring-primary-600 dark:ring-offset-gray-800"
-                              required=""
+                              required={true}
                            />
                         </div>
                         <div className="ml-3 text-sm">
@@ -144,9 +188,11 @@ export default function SignUp() {
                      </button>
                      <p className="text-sm font-light text-gray-500 dark:text-gray-400">
                         Already have an account?{" "}
-                        <a href="#" className="font-medium text-primary-600 hover:underline dark:text-primary-500">
+                        <Link
+                           to={"/sign-in"}
+                           className="font-medium text-primary-600 hover:underline dark:text-primary-500">
                            Sign In here
-                        </a>
+                        </Link>
                      </p>
                   </form>
                </div>
