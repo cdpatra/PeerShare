@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import logo from "../assets/images/logo.svg";
 import { MdDarkMode } from "react-icons/md";
 
@@ -13,7 +14,7 @@ export default function NavBar() {
          </div>
          <ul className="flex gap-14">
             <li>
-               <a href="#">Home</a>
+               <Link to={"/"}>Home</Link>
             </li>
             <li>
                <a href="#">About</a>
@@ -24,16 +25,14 @@ export default function NavBar() {
          </ul>
          <div className="buttons flex items-center">
             <MdDarkMode className="text-3xl mr-4" />
-            <button
-               type="button"
+            <Link to={"/sign-in"}
                className="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-full text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">
-               Login
-            </button>
-            <button
-               type="button"
+               Sign In
+            </Link>
+            <Link to={"/sign-up"}
                className="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-full text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700">
-               Register
-            </button>
+               Sign Up
+            </Link>
          </div>
       </nav>
    );
