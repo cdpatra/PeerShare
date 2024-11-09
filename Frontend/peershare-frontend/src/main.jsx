@@ -8,7 +8,7 @@ import SignUp from "./components/SignUp.jsx";
 import { ToastContainer } from "react-toastify";
 
 import "react-toastify/dist/ReactToastify.css";
-git
+
 const router = createBrowserRouter([
    {
       path: "/",
