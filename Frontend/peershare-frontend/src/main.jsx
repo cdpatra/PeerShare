@@ -6,8 +6,10 @@ import Home from "./components/Home.jsx";
 import SignIn from "./components/SignIn.jsx";
 import SignUp from "./components/SignUp.jsx";
 import { ToastContainer } from "react-toastify";
+import PrivateRoute from "./components/PrivateRoute.jsx"
 
 import "react-toastify/dist/ReactToastify.css";
+import Dashboard from "./components/Dashboard.jsx";
 
 const router = createBrowserRouter([
    {
@@ -25,6 +27,16 @@ const router = createBrowserRouter([
          {
             path: "/sign-up",
             element: <SignUp />,
+         },
+      ],
+   },
+   {
+      path: "/student",
+      element: <PrivateRoute />,
+      children: [
+         {
+            path: "dashboard",
+            element: <Dashboard />,
          },
       ],
    },
