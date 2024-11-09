@@ -1,5 +1,8 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import TagsInputBox from "./utility/TagsInputBox";
+import { signUp } from "../service/student-service";
+import { toast } from "react-toastify";
 export default function SignUp() {
    const [student, setStudent] = useState({
       rollNo: "",
@@ -16,17 +19,30 @@ export default function SignUp() {
    const inputHandler = (key, value) => {
       setStudent({ ...student, [key]: value });
    };
-   console.log(student);
+
+   const submitHandler = (event) => {
+      event.preventDefault();
+
+      signUp(student)
+         .then((data) => {
+            console.log(data);
+            toast.success("Registered Successfully !");
+         })
+         .catch((error) => {
+            toast.error(error.message);
+         });
+   };
+
    return (
-      <section className="bg-gray-50 dark:bg-gray-900">
-         <div className="flex flex-col items-center justify-end px-6 py-8 mx-auto lg:py-0">
-            <div className="w-full bg-white rounded-lg shadow dark:border md:mt-40 sm:max-w-xl xl:p-0 dark:bg-gray-800 dark:border-gray-700">
+      <section className="bg-gray-50 dark:bg-gray-900 px-2">
+         <div className="flex flex-col items-center py-8 mx-auto">
+            <div className="w-full bg-white rounded-lg shadow dark:border mt-24 sm:max-w-2xl xl:p-0 dark:bg-gray-800 dark:border-gray-700">
                <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
                   <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
                      Create an account
                   </h1>
-                  <form className="space-y-4 md:space-y-6" action="#">
-                     <div className="information flex gap-2">
+                  <form className="space-y-4 md:space-y-6" onSubmit={(event) => submitHandler(event)}>
+                     <div className="information flex flex-col sm:flex-row gap-2">
                         <div className="w-full">
                            <label
                               htmlFor="college-name"
@@ -48,7 +64,7 @@ export default function SignUp() {
                            <label
                               htmlFor="college-roll"
                               className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-                              Your College Roll no &apos;
+                              Your College Roll no&apos;
                            </label>
                            <input
                               type="text"
@@ -58,6 +74,42 @@ export default function SignUp() {
                               value={student.rollNo}
                               className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block  p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 w-full dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                               placeholder="College Roll no'"
+                              required={true}
+                           />
+                        </div>
+                     </div>
+                     <div className="name flex flex-col sm:flex-row gap-2">
+                        <div className="w-full">
+                           <label
+                              htmlFor="first-name"
+                              className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                              Your First Name
+                           </label>
+                           <input
+                              type="text"
+                              name="firstName"
+                              id="first-name"
+                              onChange={(event) => inputHandler("firstName", event.target.value)}
+                              value={student.firstName}
+                              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block  p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 w-full dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                              placeholder="First Name"
+                              required={true}
+                           />
+                        </div>
+                        <div className="w-full">
+                           <label
+                              htmlFor="last-name"
+                              className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+                              Your Last Name
+                           </label>
+                           <input
+                              type="text"
+                              name="lastName"
+                              id="last-name"
+                              onChange={(event) => inputHandler("lastName", event.target.value)}
+                              value={student.lastName}
+                              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block  p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 w-full dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                              placeholder="Last Name"
                               required={true}
                            />
                         </div>
@@ -112,7 +164,7 @@ export default function SignUp() {
                            required={true}
                         />
                      </div>
-                     <div className="extra-information flex gap-2">
+                     <div className="extra-information flex flex-col sm:flex-row gap-2">
                         <div className="w-full">
                            <label
                               htmlFor="graduation-year"
@@ -132,18 +184,19 @@ export default function SignUp() {
                         </div>
                         <div className="w-full">
                            <label
-                              htmlFor="last-name"
+                              htmlFor="profile-photo"
                               className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
                               Upload Your Profile Photo
                            </label>
                            <input
+                              id="profile-photo"
                               name="profilePhoto"
                               className=" p-2 block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 dark:text-gray-400 focus:outline-none dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-600"
-                              id="file_input"
                               type="file"
                            />
                         </div>
                      </div>
+                     <TagsInputBox student={student} setStudent={setStudent} />
                      <div>
                         <label
                            htmlFor="description"
@@ -153,7 +206,7 @@ export default function SignUp() {
                         <textarea
                            id="description"
                            rows={4}
-                           onChange={(event)=> inputHandler("description",event.target.value)}
+                           onChange={(event) => inputHandler("description", event.target.value)}
                            value={student.description}
                            className="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                            placeholder="Write here..."

@@ -109,7 +109,7 @@ public class StudentServiceImpl implements StudentService {
       this.studentRepository.save(student);
    }
 
-   private StudentDto studentToDto(Student student) {
+   public StudentDto studentToDto(Student student) {
       StudentDto studentDto = this.modelMapper.map(student, StudentDto.class);
 
       List<PlaylistDto> myPlaylistDtos = new ArrayList<>();
@@ -128,7 +128,7 @@ public class StudentServiceImpl implements StudentService {
       return studentDto;
    }
 
-   private Student dtoToStudent(StudentDto studentDto) {
+   public Student dtoToStudent(StudentDto studentDto) {
 
       Student student = this.modelMapper.map(studentDto, Student.class);
 

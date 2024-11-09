@@ -9,5 +9,5 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class JWTResponse {
   private String JWTToken;
-  private String username;
+  private StudentDto student;
 }
