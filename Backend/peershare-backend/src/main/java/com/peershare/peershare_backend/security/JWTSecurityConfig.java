@@ -26,6 +26,8 @@ public class JWTSecurityConfig {
       "/error",
       "/auth/login",
       "/auth/register",
+      "/auth/refresh",
+      "/auth/logout",
       "/v3/api-docs/**",
       "/v2/api-docs/**",
       "/swagger-resources/**",

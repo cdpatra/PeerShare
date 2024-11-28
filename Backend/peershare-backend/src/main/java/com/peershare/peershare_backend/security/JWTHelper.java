@@ -19,7 +19,8 @@ import io.jsonwebtoken.SignatureAlgorithm;
 public class JWTHelper {
 
   // requirement :
-  public static final long JWT_TOKEN_VALIDITY = 5 * 60 * 60;
+  // public static final long JWT_TOKEN_VALIDITY = 5 * 60 * 60;
+  public static final long JWT_TOKEN_VALIDITY = 20;
 
   private final String secret = "afafasfafafasfasfasfafacasdasfasxASFACASDFACASDFASFASFDAFASFASDAADSCSDFADCVSGCFVADXCcadwavfsfarvf";
 

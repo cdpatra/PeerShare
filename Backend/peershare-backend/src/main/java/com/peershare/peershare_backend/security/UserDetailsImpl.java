@@ -12,7 +12,7 @@ import com.peershare.peershare_backend.entities.Student;
 public class UserDetailsImpl implements UserDetails {
   private final Student student;
 
-  UserDetailsImpl(Student student) {
+  public UserDetailsImpl(Student student) {
     this.student = student;
   }
 

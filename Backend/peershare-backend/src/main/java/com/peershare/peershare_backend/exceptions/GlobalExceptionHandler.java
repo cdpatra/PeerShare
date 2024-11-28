@@ -25,4 +25,12 @@ public class GlobalExceptionHandler {
       ApiResponse apiResponse = new ApiResponse(message, false);
       return new ResponseEntity<>(apiResponse, HttpStatus.UNAUTHORIZED);
    }
+
+   // Refresh Token Exceptions
+   @ExceptionHandler(RefreshTokenExpiredException.class)
+   public ResponseEntity<ApiResponse> refreshTokenExpiredExceptionHandler(RefreshTokenExpiredException exception) {
+      String message = exception.getMessage();
+      ApiResponse apiResponse = new ApiResponse(message, false);
+      return new ResponseEntity<>(apiResponse, HttpStatus.BAD_REQUEST);
+   }
 }
