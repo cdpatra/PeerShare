@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
-import TagsInputBox from "./utility/TagsInputBox";
+import { Link } from "react-router";
+import TagsInputBox from "../components/utility/TagsInputBox";
 import { signUp } from "../service/student-service";
 import { toast } from "react-toastify";
 export default function SignUp() {

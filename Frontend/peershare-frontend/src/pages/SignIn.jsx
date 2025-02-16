@@ -1,8 +1,9 @@
 import { useState } from "react";
-import { Link, useNavigate} from "react-router-dom";
-import { signIn } from "../service/student-service";
+import { Link, useNavigate } from "react-router";
 import { toast } from "react-toastify";
-import { doAuthentication } from "../auth/authentication";
+import { useLoginMutation } from "../features/auth/authApiSlice";
+import { useDispatch } from "react-redux";
+import { setCredentials } from "../features/auth/authSlice";
 
 export default function SignIn() {
    const navigate = useNavigate();
@@ -10,22 +11,28 @@ export default function SignIn() {
       email: "",
       password: "",
    });
+   const [login] = useLoginMutation();
+   const dispatch = useDispatch();
 
    const inputHandler = (key, value) => {
       setUsernamePassword({ ...usernamePassword, [key]: value });
    };
 
-   const submitHandler = (event) => {
+   const submitHandler = async (event) => {
       event.preventDefault();
-      signIn(usernamePassword)
-         .then((data) => {
-            doAuthentication(data);
-            toast.success("Signed In Successfully !");
-            navigate("/student/dashboard");
-         })
-         .catch((error) => {
-            toast.error(error.message);
-         });
+      try {
+         const studentData = await login({ email: usernamePassword.email, password: usernamePassword.password }).unwrap();
+         dispatch(setCredentials({...studentData}));
+         toast.success("Signed In Successfully !");
+         navigate("/dashboard/popular-playlists");
+      } catch (error) {
+         console.dir(error);
+         if(error?.data){
+            toast.error(error.data.message);
+         }else{
+            toast.error("Login Failed !");
+         }
+      }
    };
 
    return (

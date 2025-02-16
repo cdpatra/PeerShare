@@ -9,9 +9,9 @@ export default function Footer() {
                resources. It&apos;s a great way to learn and connect with like-minded individuals.
             </p>
          </div>
-         <div className="flex-col justify-items-center order-1 sm:order-none">
+         <div className="inline-grid justify-items-center order-1 sm:order-none">
             <a href="#" className="block flex-col justify-items-center scale-125">
-               <img src={logo} alt="logo" className="h-12" />
+               <img src={logo} alt="logo" className="h-12 mx-auto" />
                <div className="name flex flex-nowrap">
                   <span className="font-playWrite">PeerShare</span>
                   <span className=" inline-block text-logoGreen text-4xl -mt-4">.</span>

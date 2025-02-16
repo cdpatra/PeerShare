@@ -28,13 +28,13 @@ public class PlaylistController {
    @GetMapping("/playlist")
    public ResponseEntity<List<PlaylistDto>> getAllPlaylists() {
       List<PlaylistDto> allPlaylist = this.playlistService.getAllPlaylist();
-      return new ResponseEntity<>(allPlaylist, HttpStatus.FOUND);
+      return new ResponseEntity<>(allPlaylist, HttpStatus.OK);
    }
 
    @GetMapping("/playlist/{id}")
    public ResponseEntity<PlaylistDto> getPlaylistById(@PathVariable String id) {
       PlaylistDto playlist = this.playlistService.getPlaylistById(id);
-      return new ResponseEntity<>(playlist, HttpStatus.FOUND);
+      return new ResponseEntity<>(playlist, HttpStatus.OK);
    }
 
    @PostMapping("/playlist")

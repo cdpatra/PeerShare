@@ -1,50 +1,30 @@
 import { createRoot } from "react-dom/client";
 import App from "./App.jsx";
 import "./index.css";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import Home from "./components/Home.jsx";
-import SignIn from "./components/SignIn.jsx";
-import SignUp from "./components/SignUp.jsx";
 import { ToastContainer } from "react-toastify";
-import PrivateRoute from "./components/PrivateRoute.jsx"
+import { BrowserRouter, Routes, Route } from "react-router";
 
 import "react-toastify/dist/ReactToastify.css";
-import Dashboard from "./components/Dashboard.jsx";
-
-const router = createBrowserRouter([
-   {
-      path: "/",
-      element: <App />,
-      children: [
-         {
-            path: "/",
-            element: <Home />,
-         },
-         {
-            path: "/sign-in",
-            element: <SignIn />,
-         },
-         {
-            path: "/sign-up",
-            element: <SignUp />,
-         },
-      ],
-   },
-   {
-      path: "/student",
-      element: <PrivateRoute />,
-      children: [
-         {
-            path: "dashboard",
-            element: <Dashboard />,
-         },
-      ],
-   },
-]);
+import { Provider } from "react-redux";
+import { store } from "./app/store.js";
 
 createRoot(document.getElementById("root")).render(
-   <div className="app-wrapper">
-      <ToastContainer position="bottom-right" theme="colored" limit={3} />
-      <RouterProvider router={router} />
-   </div>
+   <Provider store={store}>
+      <BrowserRouter>
+         <Routes>
+            <Route
+               path="/*"
+               element={
+                  <>
+                     <ToastContainer position="bottom-right" theme="colored" limit={3} />
+                     {/* Global Styling */}
+                     <div className="app-container font-poppins bg-slate-400 dark:bg-primaryDark dark: text-textDark ">
+                        <App />
+                     </div>
+                  </>
+               }
+            />
+         </Routes>
+      </BrowserRouter>
+   </Provider>
 );

@@ -18,7 +18,7 @@ import com.peershare.peershare_backend.services.RefreshTokenService;
 public class RefreshTokenServiceImpl implements RefreshTokenService {
 
   // private final long refreshTokenValidity = 5 * 60 * 60 * 1000;
-  private final long refreshTokenValidity = 40 * 1000;
+  private final long refreshTokenValidity = 30 * 1000;
 
   @Autowired
   private RefreshTokenRepository refreshTokenRepository;

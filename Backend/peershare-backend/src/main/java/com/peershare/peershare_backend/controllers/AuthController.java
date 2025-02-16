@@ -1,7 +1,5 @@
 package com.peershare.peershare_backend.controllers;
 
-import java.util.Map;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,6 +9,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.bind.annotation.CookieValue;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -108,11 +107,15 @@ public class AuthController {
     // verifyRefreshToken() will throw exception which is already handled;
     Student student = refreshTokenObject.getStudent();
     UserDetailsImpl userDetailsImpl = new UserDetailsImpl(student);
+
     String newAccessToken = jwtHelper.generateToken(userDetailsImpl);
-    return ResponseEntity.ok().body(Map.of("jwtaccessToken", newAccessToken));
+    StudentDto studentDto = this.studentServiceImpl.studentToDto(student);
+
+    JWTResponse jwtResponse = new JWTResponse(newAccessToken, studentDto);
+    return new ResponseEntity<>(jwtResponse, HttpStatus.OK);
   }
 
-  @PostMapping("/logout")
+  @GetMapping("/logout")
   public ResponseEntity<?> logoutHandler(@CookieValue("refreshToken") String refreshToken) {
     this.refreshTokenService.deleteRefreshToken(refreshToken);
     return new ResponseEntity<>(HttpStatus.OK);
