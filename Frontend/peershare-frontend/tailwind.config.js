@@ -4,8 +4,7 @@ export default {
    theme: {
       extend: {
          fontFamily: {
-            playWrite: ["Playwrite GB S", "sans-serif"],
-            poppins: ["Poppins", "sans-serif"],
+            playWrite: ["Playwrite GB S", "serif"],
          },
          colors: {
             logoGreen: "#b7d118",

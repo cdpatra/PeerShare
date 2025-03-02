@@ -1,12 +1,10 @@
 import { Outlet } from "react-router-dom";
 import NavBar from "./components/NavBar";
 
-import "./App.css";
-
 export default function App() {
    return (
       <>
-         <div className="app-container font-poppins  bg-slate-400 dark:bg-primaryDark dark: text-textDark ">
+         <div className="app-container bg-slate-400 dark:bg-primaryDark dark: text-textDark ">
             <NavBar />
             <Outlet />
          </div>
