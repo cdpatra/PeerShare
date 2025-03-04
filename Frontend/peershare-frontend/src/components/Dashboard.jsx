@@ -1,4 +1,4 @@
-import React, { useState} from 'react';
+import React, { useState } from 'react';
 import { styled, useTheme } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import MuiDrawer from '@mui/material/Drawer';
@@ -24,7 +24,7 @@ import CategoryIcon from '@mui/icons-material/Category';
 import Avatar from '@mui/material/Avatar';
 import { useNavigate } from 'react-router-dom';
 import { Button, Card, CardContent, CardMedia } from '@mui/material';
-import Grid from '@mui/material/Grid'; 
+import Grid from '@mui/material/Grid';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import Brightness7Icon from '@mui/icons-material/Brightness7';
 import NightlightRoundIcon from '@mui/icons-material/NightlightRound';
@@ -90,7 +90,7 @@ const Drawer = styled(MuiDrawer)(({ theme, open }) => ({
 }));
 
 export default function Dashboard() {
-  const navigate=useNavigate();
+  const navigate = useNavigate();
   const theme = useTheme();
   const [open, setOpen] = useState(true);
   const [darkMode, setDarkMode] = useState(false);
@@ -101,11 +101,11 @@ export default function Dashboard() {
     },
   });
 
-  const colortheme=createTheme(
+  const colortheme = createTheme(
     {
-      palette:{
-        customcolor:{
-          main: '#FFFFFF', 
+      palette: {
+        customcolor: {
+          main: '#FFFFFF',
           contrastText: '#000000',
 
         }
@@ -123,81 +123,82 @@ export default function Dashboard() {
   };
 
   return (
- 
+
 
     <ThemeProvider theme={modetheme}>
-    <Box sx={{ display: 'flex' }}>
-      <CssBaseline />
-      <AppBar position="fixed" open={open}>
-        <Toolbar>
-          
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            onClick={handleDrawerOpen}
-            edge="start"
-            sx={{
-              marginRight: 5,
-              ...(open && { display: 'none' }), // Hide menu button when drawer is open
-            }}
-          >
-            <MenuIcon />
-          </IconButton>
-          
-          <Box sx={{ flexGrow: 1 }} />
-          <Button color="customcolor" onClick={()=>{setDarkMode(!darkMode)}}>
-              {darkMode?<Brightness7Icon/>:<NightlightRoundIcon/>}
-           </Button>
-      
-           {/* Profile Picture */}
-           <Avatar alt="Profile" src="" sx={{ ml:2, cursor:'pointer'}} />
-        
-        
-       
-        </Toolbar>
-      </AppBar>
-      <Drawer variant="permanent" open={open}>
-        <DrawerHeader>
-          <IconButton onClick={handleDrawerClose}>
-            {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
-          </IconButton>
-        </DrawerHeader>
-        <Divider />
-  {/* This is the logic of making dashboard */}
-  <List> 
-  {['Home', 'Playlist', 'Notes', 'Peer', 'Categories'].map((text) => (
-    <ListItem key={text} disablePadding sx={{ display: 'block' }}>
-      <ListItemButton sx={{ minHeight: 48, px: 2.5, ...(open ? { justifyContent: 'initial' } : { justifyContent: 'center' })}}  
-       onClick={() => {
-          // Handle navigation based on the text
-          if (text ==='Home') {
-            navigate('/'); 
-          } }} >
-        <ListItemIcon sx={{ minWidth: 0, justifyContent: 'center', ...(open ? { mr: 3 } : { mr: 'auto' }) }}>
-          {/* Rendering different icons based on the text */}
-          {text === 'Home' && <HomeIcon />}
-          {text === 'Playlist' && <PlaylistAddIcon />}
-          {text === 'Notes' && <NoteIcon />}
-          {text === 'Peer' && <PeopleIcon />}
-          {text === 'Categories' && <CategoryIcon />}
-        </ListItemIcon>
-        <ListItemText primary={text} sx={{ ...(open ? { opacity: 1 } : { opacity: 0 }) }} />
-      </ListItemButton>
-    </ListItem>
-  ))}
-</List>
+      <Box sx={{ display: 'flex' }}>
+        <CssBaseline />
+        <AppBar position="fixed" open={open}>
+          <Toolbar>
 
-      </Drawer>
-      <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
-        <DrawerHeader />
-        <Box sx={{ p: 3, margin: 'auto', maxWidth: '1300px' }}>
-        
-            <ProfileCard/>
-       
+            <IconButton
+              color="inherit"
+              aria-label="open drawer"
+              onClick={handleDrawerOpen}
+              edge="start"
+              sx={{
+                marginRight: 5,
+                ...(open && { display: 'none' }), // Hide menu button when drawer is open
+              }}
+            >
+              <MenuIcon />
+            </IconButton>
+
+            <Box sx={{ flexGrow: 1 }} />
+            <Button color="customcolor" onClick={() => { setDarkMode(!darkMode) }}>
+              {darkMode ? <Brightness7Icon /> : <NightlightRoundIcon />}
+            </Button>
+
+            {/* Profile Picture */}
+            <Avatar alt="Profile" src="" sx={{ ml: 2, cursor: 'pointer' }} />
+
+
+
+          </Toolbar>
+        </AppBar>
+        <Drawer variant="permanent" open={open}>
+          <DrawerHeader>
+            <IconButton onClick={handleDrawerClose}>
+              {theme.direction === 'rtl' ? <ChevronRightIcon /> : <ChevronLeftIcon />}
+            </IconButton>
+          </DrawerHeader>
+          <Divider />
+          {/* This is the logic of making dashboard */}
+          <List>
+            {['Home', 'Playlist', 'Notes', 'Peer', 'Categories'].map((text) => (
+              <ListItem key={text} disablePadding sx={{ display: 'block' }}>
+                <ListItemButton sx={{ minHeight: 48, px: 2.5, ...(open ? { justifyContent: 'initial' } : { justifyContent: 'center' }) }}
+                  onClick={() => {
+                    // Handle navigation based on the text
+                    if (text === 'Home') {
+                      navigate('/');
+                    }
+                  }} >
+                  <ListItemIcon sx={{ minWidth: 0, justifyContent: 'center', ...(open ? { mr: 3 } : { mr: 'auto' }) }}>
+                    {/* Rendering different icons based on the text */}
+                    {text === 'Home' && <HomeIcon />}
+                    {text === 'Playlist' && <PlaylistAddIcon />}
+                    {text === 'Notes' && <NoteIcon />}
+                    {text === 'Peer' && <PeopleIcon />}
+                    {text === 'Categories' && <CategoryIcon />}
+                  </ListItemIcon>
+                  <ListItemText primary={text} sx={{ ...(open ? { opacity: 1 } : { opacity: 0 }) }} />
+                </ListItemButton>
+              </ListItem>
+            ))}
+          </List>
+
+        </Drawer>
+        <Box component="main" sx={{ flexGrow: 1, p: 3 }}>
+          <DrawerHeader />
+          <Box sx={{ p: 3, margin: 'auto', maxWidth: '1300px' }}>
+
+            <ProfileCard />
+
+          </Box>
+
         </Box>
-        
       </Box>
-    </Box>
     </ThemeProvider>
 
   );
