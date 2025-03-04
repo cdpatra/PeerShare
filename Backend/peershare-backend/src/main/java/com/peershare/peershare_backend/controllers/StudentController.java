@@ -32,14 +32,14 @@ public class StudentController {
    @GetMapping("/student")
    public ResponseEntity<List<StudentDto>> getAllStudents() {
       List<StudentDto> allStudents = this.studentService.getAllStudents();
-      return new ResponseEntity<>(allStudents, HttpStatus.FOUND);
+      return new ResponseEntity<>(allStudents, HttpStatus.OK);
    }
 
    // Handler to get a single student by id;
    @GetMapping("/student/{id}")
    public ResponseEntity<StudentDto> getStudentById(@PathVariable String id) {
       StudentDto student = this.studentService.getStudentById(id);
-      return new ResponseEntity<>(student, HttpStatus.FOUND);
+      return new ResponseEntity<>(student, HttpStatus.OK);
    }
 
    // Handler to add a single student;

@@ -29,13 +29,13 @@ public class CategoryController {
    @GetMapping()
    public ResponseEntity<List<CategoryDto>> getAllCategories() {
       List<CategoryDto> allCategories = categoryService.getAllCategories();
-      return new ResponseEntity<>(allCategories, HttpStatus.FOUND);
+      return new ResponseEntity<>(allCategories, HttpStatus.OK);
    }
 
    @GetMapping("/{id}")
    public ResponseEntity<CategoryDto> getCategoryById(@PathVariable("id") int id) {
       CategoryDto requiredCategory = categoryService.getCategoryById(id);
-      return new ResponseEntity<>(requiredCategory, HttpStatus.FOUND);
+      return new ResponseEntity<>(requiredCategory, HttpStatus.OK);
    }
 
    // Create Handler

@@ -36,7 +36,7 @@ public class NoteController {
    public ResponseEntity<NoteDto> getNoteByCompositePrimaryKey(
          @ModelAttribute NoteCompositePrimaryKeyDto noteCompositePrimaryKeyDto) {
       NoteDto noteDto = this.noteService.getNoteByCompositePrimaryKey(noteCompositePrimaryKeyDto);
-      return new ResponseEntity<>(noteDto, HttpStatus.FOUND);
+      return new ResponseEntity<>(noteDto, HttpStatus.OK);
    }
 
    // Getting all the notes of any particular playlist of any particular student;
@@ -52,7 +52,7 @@ public class NoteController {
 
       List<NoteDto> noteDtos = this.noteService.getAllNotesByStudentIdAndPlaylistId(studentId, playlistId);
 
-      return new ResponseEntity<>(noteDtos, HttpStatus.FOUND);
+      return new ResponseEntity<>(noteDtos, HttpStatus.OK);
    }
 
    // Deleting any particular note with the help of studentId, playlistId and
