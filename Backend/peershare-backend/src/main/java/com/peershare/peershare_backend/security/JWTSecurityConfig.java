@@ -61,7 +61,11 @@ public class JWTSecurityConfig {
   @Bean
   public CorsConfigurationSource corsConfigurationSource() {
     CorsConfiguration configuration = new CorsConfiguration();
+<<<<<<< HEAD
     configuration.setAllowedOrigins(Arrays.asList("http://localhost:5173")); // frontend origin
+=======
+    configuration.setAllowedOrigins(Arrays.asList("http://localhost:5173","https://curly-potato-wp9wx6v76j6cwj4-5173.app.github.dev")); // frontend origin
+>>>>>>> 48d436489ef3dc52c732bf4268c34e450dff32b3
     configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS")); // Allowed methods
     configuration.setAllowedHeaders(Arrays.asList("Authorization", "Content-Type")); // Allowed headers
     configuration.setAllowCredentials(true); // Allow credentials (like cookies or Authorization headers)

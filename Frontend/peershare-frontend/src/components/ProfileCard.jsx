@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 import React, { useEffect, useState } from 'react';
+=======
+import { useEffect, useState } from 'react';
+>>>>>>> 48d436489ef3dc52c732bf4268c34e450dff32b3
 import { fetchdata } from './FetchData';
 
 const ProfileCard = () => {
