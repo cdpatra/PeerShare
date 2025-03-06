@@ -5,7 +5,8 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Home from "./components/Home.jsx";
 import SignIn from "./components/SignIn.jsx";
 import SignUp from "./components/SignUp.jsx";
-import  Dashboard from "./components/Dashboard.jsx";
+import Dashboard from "./components/Dashboard.jsx";
+import Playlist from "./components/playlist/Playlist.jsx";
 
 const router = createBrowserRouter([
    {
@@ -27,9 +28,9 @@ const router = createBrowserRouter([
       ],
    },
    {
-      path:"/dashboard",
-      element:<Dashboard/>
-   }
+      path: "/dashboard",
+      element: <Dashboard />,
+   },
 ]);
 
 createRoot(document.getElementById("root")).render(<RouterProvider router={router} />);
