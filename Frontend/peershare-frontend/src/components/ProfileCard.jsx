@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import  { useEffect, useState } from 'react';
 import { fetchdata } from './FetchData';
 
 const ProfileCard = () => {
@@ -7,6 +7,7 @@ const ProfileCard = () => {
   useEffect(() => {
     const fetch = async () => {
       const res = await fetchdata();
+      console.log(res);
       setProfiledata(res);
     };
 

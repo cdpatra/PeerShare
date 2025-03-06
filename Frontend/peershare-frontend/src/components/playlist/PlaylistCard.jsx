@@ -1,16 +1,18 @@
 import { useEffect, useState } from "react";
 
-function PlaylistCard({ playlistId }) {
+function PlaylistCard({ playlistData }) {
+   const { playlistURL } = playlistData;
    const [playlistCardData, setPlaylistCardData] = useState([]);
    useEffect(() => {
       (async () => {
          const API_KEY = "AIzaSyCZBUxV9M35c_dijr_O70-EpYey-VFhRKw";
          try {
             const response = await fetch(
-               `https://www.googleapis.com/youtube/v3/playlists?part=snippet&id=${playlistId}&key=${API_KEY}`
+               `https://www.googleapis.com/youtube/v3/playlists?part=snippet&id=${playlistURL}&key=${API_KEY}`
             );
             const data = await response.json();
             console.log(data);
+            setPlaylistCardData(data);
          } catch (error) {
             console.error(error.message);
          }
@@ -23,7 +25,7 @@ function PlaylistCard({ playlistId }) {
             src="https://thumbs.dreamstime.com/b/basic-rgb-261361273.jpg"
             alt="thumbnail"
          />
-         <div className="title font-semibold text-xl text-neutral-700">Playlist Name </div>
+         <div className="title font-semibold text-xl text-neutral-700">{playlistCardData?.items[0]}</div>
          <div className="instructor-name text-sm text-neutral-500">Instructor Name</div>
          <div className="lower-section flex justify-between items-center">
             <div className="playlist-info my-2 text-neutral-600">

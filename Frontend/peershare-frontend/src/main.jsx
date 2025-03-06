@@ -7,6 +7,7 @@ import SignIn from "./components/SignIn.jsx";
 import SignUp from "./components/SignUp.jsx";
 import  Dashboard from "./components/Dashboard.jsx";
 import Peer from "./components/Peer.jsx";
+import Playlist from "./components/playlist/Playlist.jsx";
 
 const router = createBrowserRouter([
    {
@@ -32,6 +33,7 @@ const router = createBrowserRouter([
       element: <Dashboard />,
       children: [
          { path: "peer", element:<Peer/> },  
+         { path: "playlist", element:<Playlist/> },  
       ],
    },
 ]);

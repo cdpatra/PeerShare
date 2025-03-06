@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { styled, useTheme } from "@mui/material/styles";
 import Box from "@mui/material/Box";
 import MuiDrawer from "@mui/material/Drawer";
@@ -6,7 +6,6 @@ import MuiAppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import List from "@mui/material/List";
 import CssBaseline from "@mui/material/CssBaseline";
-import Typography from "@mui/material/Typography";
 import Divider from "@mui/material/Divider";
 import IconButton from "@mui/material/IconButton";
 import MenuIcon from "@mui/icons-material/Menu";
@@ -22,13 +21,11 @@ import NoteIcon from "@mui/icons-material/Note";
 import PeopleIcon from "@mui/icons-material/People";
 import CategoryIcon from "@mui/icons-material/Category";
 import Avatar from "@mui/material/Avatar";
-import { useNavigate } from "react-router-dom";
-import { Button, Card, CardContent, CardMedia } from "@mui/material";
-import Grid from "@mui/material/Grid";
+import { Outlet, useNavigate } from "react-router-dom";
+import { Button} from "@mui/material";
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 import Brightness7Icon from "@mui/icons-material/Brightness7";
 import NightlightRoundIcon from "@mui/icons-material/NightlightRound";
-import ProfileCard from "./ProfileCard";
 
 const drawerWidth = 240;
 
