@@ -1,26 +1,16 @@
 import { useEffect, useState } from "react";
 
-function PlaylistCard() {
-   const [playlistData, setPlaylistData] = useState([]);
+function PlaylistCard({ playlistId }) {
+   const [playlistCardData, setPlaylistCardData] = useState([]);
    useEffect(() => {
       (async () => {
+         const API_KEY = "AIzaSyCZBUxV9M35c_dijr_O70-EpYey-VFhRKw";
          try {
-          const token = localStorage.getItem("token"); 
-            const response = await fetch("http://localhost:8080/users/playlist", {
-               method: "GET",
-               headers: {
-                  "Content-Type": "application/json",
-                  Authorization: `Bearer ${token}`, // Set Authorization header
-               },
-            });
-
-            if (!response.ok) {
-               throw new Error(`HTTP error! Status: ${response.status}`);
-            }
-
+            const response = await fetch(
+               `https://www.googleapis.com/youtube/v3/playlists?part=snippet&id=${playlistId}&key=${API_KEY}`
+            );
             const data = await response.json();
             console.log(data);
-            setPlaylistData(data);
          } catch (error) {
             console.error(error.message);
          }
