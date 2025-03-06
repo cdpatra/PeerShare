@@ -35,12 +35,9 @@ const router = createBrowserRouter([
    {
       path: "/dashboard",
       element: <Dashboard />,
-<<<<<<< HEAD
       children: [
          { path: "peer", element:<Peer/> },  
       ],
-=======
->>>>>>> 48d436489ef3dc52c732bf4268c34e450dff32b3
    },
 ]);
 
