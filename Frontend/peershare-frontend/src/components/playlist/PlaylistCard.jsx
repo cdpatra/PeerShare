@@ -1,38 +1,38 @@
 import { useEffect, useState } from "react";
 
 function PlaylistCard({ playlistData }) {
-   const { playlistURL } = playlistData;
+   const { playlistURL, categoryName } = playlistData;
    const [playlistCardData, setPlaylistCardData] = useState([]);
    useEffect(() => {
       (async () => {
          const API_KEY = "AIzaSyCZBUxV9M35c_dijr_O70-EpYey-VFhRKw";
          try {
             const response = await fetch(
-               `https://www.googleapis.com/youtube/v3/playlists?part=snippet&id=${playlistURL}&key=${API_KEY}`
+               `https://www.googleapis.com/youtube/v3/playlists?part=snippet,contentDetails&id=${playlistURL}&key=${API_KEY}`
             );
             const data = await response.json();
             console.log(data);
-            setPlaylistCardData(data);
+            setPlaylistCardData(data.items[0]);
          } catch (error) {
             console.error(error.message);
          }
       })();
    }, []);
    return (
-      <div className="bg-neutral-100 rounded-xl overflow-hidden p-2 shadow-md border border-neutral-300">
+      <div className="bg-neutral-100 flex flex-col justify-between rounded-xl overflow-hidden p-2 shadow-md border border-neutral-300">
          <img
             className="rounded-xl mb-2 border border-neutral-300"
-            src="https://thumbs.dreamstime.com/b/basic-rgb-261361273.jpg"
+            src={playlistCardData?.snippet?.thumbnails?.standard?.url}
             alt="thumbnail"
          />
-         <div className="title font-semibold text-xl text-neutral-700">{playlistCardData?.items[0]}</div>
-         <div className="instructor-name text-sm text-neutral-500">Instructor Name</div>
+         <div className="title font-semibold text-xl text-neutral-700">{playlistCardData?.snippet?.title}</div>
+         <div className="instructor-name text-sm text-neutral-500">{playlistCardData?.snippet?.channelTitle}</div>
          <div className="lower-section flex justify-between items-center">
             <div className="playlist-info my-2 text-neutral-600">
-               <div className="category-name ">Java</div>
-               <div className="no-of-lectures">24 Lectures</div>
+               <div className="category-name ">{categoryName}</div>
+               <div className="no-of-lectures">{playlistCardData?.contentDetails?.itemCount} Lectures</div>
             </div>
-            <div className="rating-add-button-container flex gap-4 items-center">
+            <div className="rating-add-button-container flex gap-2 items-center">
                <div className="rating flex gap-1 items-center bg-neutral-200 border border-neutral-300 text-neutral-700 px-3 py-1 rounded-2xl">
                   <img src="/images/star.png" alt="rating stars" className="w-5" />
                   4.4
