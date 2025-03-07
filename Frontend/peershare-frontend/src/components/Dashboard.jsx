@@ -180,6 +180,13 @@ export default function Dashboard() {
                     if (text == "Peer") {
                       navigate("/dashboard/peer");
                     }
+
+                    if(text == "Playlist"){
+                      navigate("/dashboard/playlist")
+                    }
+                    if (text == "Categories") {
+                       navigate("/dashboard/categories");
+                    }
                   
                   }}
                 >

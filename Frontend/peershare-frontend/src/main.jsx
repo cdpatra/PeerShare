@@ -9,6 +9,7 @@ import Dashboard from "./components/Dashboard.jsx";
 import Peer from "./components/Peer.jsx";
 import Playlist from "./components/playlist/Playlist.jsx";
 import PlaylistInfo from "./components/playlistInfo/PlaylistInfo.jsx";
+import Categories from "./components/categories/Categories.jsx";
 
 const router = createBrowserRouter([
    {
@@ -64,6 +65,10 @@ const router = createBrowserRouter([
          {
             path: "playlist/:playlist-url", // Keep it separate to avoid nesting under /playlist
             element: <PlaylistInfo />,
+         },
+         {
+            path: "categories", // Keep it separate to avoid nesting under /playlist
+            element: <Categories />,
          },
       ],
    },
