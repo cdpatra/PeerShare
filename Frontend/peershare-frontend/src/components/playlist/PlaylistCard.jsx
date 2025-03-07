@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 function PlaylistCard({ playlistData }) {
-   const { playlistURL, categoryName } = playlistData;
+   const { playlistURL, categoryName, review } = playlistData;
    const [playlistCardData, setPlaylistCardData] = useState([]);
    useEffect(() => {
       (async () => {
@@ -20,11 +21,13 @@ function PlaylistCard({ playlistData }) {
    }, []);
    return (
       <div className="bg-neutral-100 flex flex-col justify-between rounded-xl overflow-hidden p-2 shadow-md border border-neutral-300">
-         <img
-            className="rounded-xl mb-2 border border-neutral-300"
-            src={playlistCardData?.snippet?.thumbnails?.standard?.url}
-            alt="thumbnail"
-         />
+         <Link to={`/dashboard/playlist/${playlistURL}`}>
+            <img
+               className="rounded-xl mb-2 border border-neutral-300"
+               src={playlistCardData?.snippet?.thumbnails?.standard?.url}
+               alt="thumbnail"
+            />
+         </Link>
          <div className="title font-semibold text-xl text-neutral-700">{playlistCardData?.snippet?.title}</div>
          <div className="instructor-name text-sm text-neutral-500">{playlistCardData?.snippet?.channelTitle}</div>
          <div className="lower-section flex justify-between items-center">
@@ -35,7 +38,7 @@ function PlaylistCard({ playlistData }) {
             <div className="rating-add-button-container flex gap-2 items-center">
                <div className="rating flex gap-1 items-center bg-neutral-200 border border-neutral-300 text-neutral-700 px-3 py-1 rounded-2xl">
                   <img src="/images/star.png" alt="rating stars" className="w-5" />
-                  4.4
+                  {review}
                </div>
                <button className="add-button px-4 py-2 bg-cyan-400 rounded-md border border-cyan-500 hover:bg-cyan-500">
                   Add
