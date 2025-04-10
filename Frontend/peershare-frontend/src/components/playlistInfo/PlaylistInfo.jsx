@@ -1,11 +1,12 @@
-import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Link, useParams } from "react-router-dom";
 
 const API_KEY = "AIzaSyCZBUxV9M35c_dijr_O70-EpYey-VFhRKw"; // ⚠️ Replace with your actual API key
 
 const PlaylistInfo = () => {
    const params = useParams();
    const playlistUrl = params["playlist-url"];
+   const playlistId = params["playlist-id"];
    const [videos, setVideos] = useState([]);
    const [playlistDetails, setPlaylistDetails] = useState(null);
    const [loading, setLoading] = useState(true);
@@ -97,8 +98,11 @@ const PlaylistInfo = () => {
             ) : videos.length === 0 ? (
                <p className="text-center text-gray-600">No videos found.</p>
             ) : (
-               videos.map((video, index) => (
-                  <div
+               videos?.map((video, index) => (
+                  <Link
+                     to={`/dashboard/video-section/?playlist-url=${playlistUrl}&playlist-id=${playlistId}&video-id=${
+                        video.snippet.resourceId.videoId
+                     }&lecture-no=${index + 1}`}
                      key={video.id}
                      className="flex items-center gap-4 mb-4 bg-gray-100 p-3 rounded-lg shadow-md border border-gray-300 hover:bg-gray-200 transition">
                      <img
@@ -112,7 +116,7 @@ const PlaylistInfo = () => {
                         </h2>
                         <p className="text-gray-600">{video.snippet.channelTitle}</p>
                      </div>
-                  </div>
+                  </Link>
                ))
             )}
          </div>

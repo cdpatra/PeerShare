@@ -35,7 +35,7 @@ function Playlist() {
             <Box sx={{ p: 2, margin: "auto", maxWidth: "1300px" }}>
                <div className="playlist-container mt-14 grid grid-cols-[repeat(auto-fill,minmax(250px,1fr))] gap-8">
                   {playlistData?.map((data, i) => {
-                     return <PlaylistCard key={i} playlistData={data} />;
+                     return <PlaylistCard key={i} playlistData={data}  />;
                   })}
                </div>
             </Box>

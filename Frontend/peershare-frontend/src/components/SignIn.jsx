@@ -1,26 +1,29 @@
 import { useState } from "react";
-import { Link } from "react-router-dom";
-import axios from 'axios';
+import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
 
 export default function SignIn() {
+   const navigate = useNavigate();
    const [signIn, setSignIn] = useState({
       email: "",
       password: "",
    });
 
-   const submitHandler= async (event)=>{
+   const submitHandler = async (event) => {
       event.preventDefault();
-      try{
-         const res= await axios.post("http://localhost:8080/auth/login",signIn);
-         console.log(res.data.jwttoken);
-         localStorage.setItem("token",res.data.jwttoken);
+      try {
+         const res = await axios.post("http://localhost:8080/auth/login", signIn);
+         console.log(res.data);
+         const student = res.data.student;
+         localStorage.setItem("rollNo", student.rollNo);
+         localStorage.setItem("firstName", student.firstName);
+         localStorage.setItem("lastName", student.lastName);
+         localStorage.setItem("token", res.data.jwttoken);
+         navigate("/dashboard");
+      } catch (err) {
+         console.log("post error:", err);
       }
-      catch(err){
-         console.log("post error:",err);
-      }
-    
-      
-   }
+   };
 
    const inputHandler = (key, value) => {
       setSignIn({ ...signIn, [key]: value });

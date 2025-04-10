@@ -10,6 +10,7 @@ import Peer from "./components/Peer.jsx";
 import Playlist from "./components/playlist/Playlist.jsx";
 import PlaylistInfo from "./components/playlistInfo/PlaylistInfo.jsx";
 import Categories from "./components/categories/Categories.jsx";
+import VideoSection from "./components/videoSection/VideoSection.jsx";
 
 const router = createBrowserRouter([
    {
@@ -30,28 +31,6 @@ const router = createBrowserRouter([
          },
       ],
    },
-   // {
-   //    path: "/dashboard",
-   //    element: <Dashboard />,
-   //    children: [
-   //       { index: true, element: <Navigate to="playlist" replace /> },
-   //       { path: "peer", element: <Peer /> },
-   //       {
-   //          path: "playlist/*",
-   //          element: <Playlist />,
-   //          children: [
-   //             {
-   //                path: "playlist-info/:playlist-url",
-   //                element: <PlaylistInfo />,
-   //             },
-   //          ],
-   //       },
-   //       // {
-   //       //    path: "playlist-info/:playlist-url",
-   //       //    element: <PlaylistInfo />,
-   //       // },
-   //    ],
-   // },
    {
       path: "/dashboard",
       element: <Dashboard />,
@@ -63,13 +42,17 @@ const router = createBrowserRouter([
             element: <Playlist />,
          },
          {
-            path: "playlist/:playlist-url", // Keep it separate to avoid nesting under /playlist
+            path: "playlist/:playlist-url/:playlist-id", // Keep it separate to avoid nesting under /playlist
             element: <PlaylistInfo />,
          },
          {
             path: "categories", // Keep it separate to avoid nesting under /playlist
             element: <Categories />,
          },
+         {
+            path: "video-section",
+            element: <VideoSection />,
+         }, 
       ],
    },
 ]);

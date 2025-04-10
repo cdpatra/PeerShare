@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 function PlaylistCard({ playlistData }) {
-   const { playlistURL, categoryName, review } = playlistData;
+   const { playlistId ,playlistURL, categoryName, review } = playlistData;
    const [playlistCardData, setPlaylistCardData] = useState([]);
    useEffect(() => {
       (async () => {
@@ -21,7 +21,7 @@ function PlaylistCard({ playlistData }) {
    }, []);
    return (
       <div className="bg-neutral-100 flex flex-col justify-between rounded-xl overflow-hidden p-2 shadow-md border border-neutral-300">
-         <Link to={`/dashboard/playlist/${playlistURL}`}>
+         <Link to={`/dashboard/playlist/${playlistURL}/${playlistId}`}>
             <img
                className="rounded-xl mb-2 border border-neutral-300"
                src={playlistCardData?.snippet?.thumbnails?.standard?.url}

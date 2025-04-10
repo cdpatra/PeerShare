@@ -7,8 +7,8 @@ export default function Home() {
    return (
       <>
          <CanvasBackground />
-         <About />
-         <Contact />
+         {/* <About /> */}
+         {/* <Contact /> */}
          <Footer />
       </>
    );
