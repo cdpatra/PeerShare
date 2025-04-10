@@ -19,6 +19,4 @@ public class Note {
 
    @Lob
    private String noteContent;
-
-   
 }
