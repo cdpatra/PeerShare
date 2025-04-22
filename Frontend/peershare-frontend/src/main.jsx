@@ -11,6 +11,7 @@ import Playlist from "./components/playlist/Playlist.jsx";
 import PlaylistInfo from "./components/playlistInfo/PlaylistInfo.jsx";
 import Categories from "./components/categories/Categories.jsx";
 import VideoSection from "./components/videoSection/VideoSection.jsx";
+import { MyPlaylist } from "./components/my-playlists/MyPlaylist.jsx";
 
 const router = createBrowserRouter([
    {
@@ -53,6 +54,10 @@ const router = createBrowserRouter([
             path: "video-section",
             element: <VideoSection />,
          }, 
+         {
+            path:"my-playlists",
+            element:<MyPlaylist/>
+         }
       ],
    },
 ]);

@@ -16,6 +16,7 @@ function Playlist() {
       (async () => {
          try {
             const token = localStorage.getItem("token");
+            const studentId=localStorage.getItem("rollNo");
 
             // Fetching all playlist data
             const response = await fetch("http://localhost:8080/users/playlist", {
@@ -31,7 +32,41 @@ function Playlist() {
             }
 
             const playlistData = await response.json();
-            setPlaylistData(playlistData);
+            // setPlaylistData(playlistData);
+            
+            //fetching studentdto playlist
+            const studentResponse = await fetch(`http://localhost:8080/users/student/${studentId}`, {
+               method: "GET",
+               headers: {
+                 "Content-Type": "application/json",
+                 Authorization: `Bearer ${token}`,
+               },
+             });
+       
+             if (!studentResponse.ok) {
+               throw new Error(`Student API error! Status: ${studentResponse.status}`);
+             }
+       
+             const studentData = await studentResponse.json();
+             const addedPlaylists=studentData.myPlaylistsDtos.map((obj)=>{
+               obj.added=true;
+               return obj;
+             });
+             console.log(addedPlaylists);
+
+             const mergedArray = [
+               ...addedPlaylists,
+               ...playlistData.filter(
+                 smallObj => !addedPlaylists.some(bigObj => bigObj.playlistId === smallObj.playlistId)
+               )
+             ];
+
+             setPlaylistData(mergedArray);
+             
+            //  console.log(addedPlaylists);
+             console.log(mergedArray);
+             
+
 
             // Fetching all category data
             const { data } = await axios.get("http://localhost:8080/users/category", {
@@ -43,6 +78,7 @@ function Playlist() {
          } catch (error) {
             console.error(error.message);
          }
+         
       })();
    }, []);
 

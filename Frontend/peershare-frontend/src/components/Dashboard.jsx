@@ -28,6 +28,9 @@ import CategoryIcon from "@mui/icons-material/Category";
 import Brightness7Icon from "@mui/icons-material/Brightness7";
 import NightlightRoundIcon from "@mui/icons-material/NightlightRound";
 import { Navigate, Outlet, useNavigate } from "react-router-dom";
+import CollectionsBookmarkIcon from "@mui/icons-material/CollectionsBookmark";
+
+
 
 const drawerWidth = 240;
 
@@ -74,18 +77,20 @@ export default function Dashboard() {
          </DrawerHeader>
          <Divider />
          <List>
-            {["Home", "Playlist", "Peer", ].map((text) => (
+            {["Home", "Playlist", "Peer","My playlists" ].map((text) => (
                <ListItem key={text} disablePadding>
                   <ListItemButton
                      onClick={() => {
                         if (text === "Home") navigate("/");
                         if (text === "Peer") navigate("/dashboard/peer");
                         if (text === "Playlist") navigate("/dashboard/playlist");
+                        if (text === "My playlists") navigate("/dashboard/my-playlists");
                      }}>
                      <ListItemIcon>
                         {text === "Home" && <HomeIcon />}
                         {text === "Playlist" && <PlaylistAddIcon />}
                         {text === "Peer" && <PeopleIcon />}
+                        {text=="My playlists" && <CollectionsBookmarkIcon/>}
                      </ListItemIcon>
                      <ListItemText primary={text} />
                   </ListItemButton>

@@ -2,40 +2,13 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 
-function PlaylistCard({ playlistData }) {
+function MyPlaylistCard({ playlistData }) {
    const { playlistId ,playlistURL, categoryName, review } = playlistData;
    const [playlistCardData, setPlaylistCardData] = useState([]);
    
 
-const addPlaylistHandler = async () => {
-  
-  const studentId = localStorage.getItem("rollNo");
-  const token =localStorage.getItem("token");
 
-  try {
-    const response = await axios.put(
-      `http://localhost:8080/users/student/add-playlist`,
-      {},
-      {
-        params: {
-          playlistId,
-          studentId,
-        },
-        headers: {
-         Authorization: `Bearer ${token}`,
-       },
-      }
-    );
-
-    console.log("Playlist added:", response.data.message);
-  } catch (err) {
-    if (err.response) {
-      console.error("Server error:", err.response.data.message);
-    } else {
-      console.error("Network error:", err.message);
-    }
-  }
-};
+ 
 
    useEffect(() => {
       (async () => {
@@ -73,13 +46,11 @@ const addPlaylistHandler = async () => {
                   <img src="/images/star.png" alt="rating stars" className="w-5" />
                   {review}
                </div>
-               <button onClick={addPlaylistHandler} className="add-button px-4 py-2 bg-cyan-400 rounded-md border border-cyan-500 hover:bg-cyan-500">
-                  {playlistData.added?"Added":"Add"}
-               </button>
+              
             </div>
          </div>
       </div>
    );
 }
 
-export default PlaylistCard;
+export default MyPlaylistCard;
