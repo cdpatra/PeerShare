@@ -24,7 +24,7 @@ public class Playlist implements Serializable{
    private String instructorChannelName;
    private double review;
    private String playlistURL;
-
+   
    @ManyToOne
    private Category category;
 

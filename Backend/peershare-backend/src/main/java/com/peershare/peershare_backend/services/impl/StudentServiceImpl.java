@@ -1,7 +1,9 @@
 package com.peershare.peershare_backend.services.impl;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
@@ -132,7 +134,7 @@ public class StudentServiceImpl implements StudentService {
 
       Student student = this.modelMapper.map(studentDto, Student.class);
 
-      List<Playlist> myPlaylists = new ArrayList<>();
+      Set<Playlist> myPlaylists = new HashSet<>();
 
       if (!studentDto.getMyPlaylistsDtos().isEmpty()) {
          myPlaylists = studentDto.getMyPlaylistsDtos().stream().map((playlistDto) -> {
@@ -141,7 +143,7 @@ public class StudentServiceImpl implements StudentService {
                   .orElseThrow(() -> new ResourceNotFoundException("Category", "id", playlistDto.getCategoryId()));
             playlist.setCategory(category);
             return playlist;
-         }).collect(Collectors.toList());
+         }).collect(Collectors.toSet());
       }
 
       student.setMyPlaylists(myPlaylists);

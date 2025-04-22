@@ -44,7 +44,7 @@ public class Student implements Serializable {
    private String description;
 
    @ManyToMany(fetch = FetchType.EAGER)
-   private List<Playlist> myPlaylists = new ArrayList<>();
+   private Set<Playlist> myPlaylists = new HashSet<>();
 
    public void addPlaylist(Playlist playlist) {
       this.myPlaylists.add(playlist);
