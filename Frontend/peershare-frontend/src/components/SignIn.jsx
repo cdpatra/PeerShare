@@ -13,7 +13,6 @@ export default function SignIn() {
       event.preventDefault();
       try {
          const res = await axios.post("http://localhost:8080/auth/login", signIn);
-         console.log(res.data);
          const student = res.data.student;
          localStorage.setItem("rollNo", student.rollNo);
          localStorage.setItem("firstName", student.firstName);

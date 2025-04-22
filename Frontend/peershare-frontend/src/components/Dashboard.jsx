@@ -74,21 +74,18 @@ export default function Dashboard() {
          </DrawerHeader>
          <Divider />
          <List>
-            {["Home", "Playlist", "Notes", "Peer", "Categories"].map((text) => (
+            {["Home", "Playlist", "Peer", ].map((text) => (
                <ListItem key={text} disablePadding>
                   <ListItemButton
                      onClick={() => {
                         if (text === "Home") navigate("/");
                         if (text === "Peer") navigate("/dashboard/peer");
                         if (text === "Playlist") navigate("/dashboard/playlist");
-                        if (text === "Categories") navigate("/dashboard/categories");
                      }}>
                      <ListItemIcon>
                         {text === "Home" && <HomeIcon />}
                         {text === "Playlist" && <PlaylistAddIcon />}
-                        {text === "Notes" && <NoteIcon />}
                         {text === "Peer" && <PeopleIcon />}
-                        {text === "Categories" && <CategoryIcon />}
                      </ListItemIcon>
                      <ListItemText primary={text} />
                   </ListItemButton>
