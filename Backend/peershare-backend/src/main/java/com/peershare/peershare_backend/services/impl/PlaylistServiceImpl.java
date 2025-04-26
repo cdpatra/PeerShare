@@ -9,11 +9,15 @@ import org.springframework.stereotype.Service;
 
 import com.peershare.peershare_backend.entities.Category;
 import com.peershare.peershare_backend.entities.Playlist;
+import com.peershare.peershare_backend.entities.Student;
 import com.peershare.peershare_backend.exceptions.ResourceNotFoundException;
 import com.peershare.peershare_backend.payloads.PlaylistDto;
 import com.peershare.peershare_backend.repositories.CategoryRepository;
 import com.peershare.peershare_backend.repositories.PlaylistRepository;
+import com.peershare.peershare_backend.repositories.StudentRepository;
 import com.peershare.peershare_backend.services.PlaylistService;
+
+import ch.qos.logback.classic.Logger;
 
 @Service
 public class PlaylistServiceImpl implements PlaylistService {
@@ -23,6 +27,9 @@ public class PlaylistServiceImpl implements PlaylistService {
 
    @Autowired
    PlaylistRepository playlistRepository;
+
+   @Autowired
+   StudentRepository studentRepository;
 
    @Autowired
    ModelMapper modelMapper;
@@ -75,6 +82,7 @@ public class PlaylistServiceImpl implements PlaylistService {
       PlaylistDto playlistDto = this.modelMapper.map(playlist, PlaylistDto.class);
       playlistDto.setCategoryId(playlist.getCategory().getCategoryId());
       playlistDto.setCategoryName(playlist.getCategory().getCategoryName());
+      playlistDto.setStudentId(playlist.getStudent().getRollNo());
       return playlistDto;
    }
 
@@ -84,6 +92,10 @@ public class PlaylistServiceImpl implements PlaylistService {
       Category category = this.categoryRepository.findById(categoryId)
             .orElseThrow(() -> new ResourceNotFoundException("Category", "id", categoryId));
       playlist.setCategory(category);
+      String studentId=playlistDto.getStudentId();
+      Student student =this.studentRepository.findById(studentId)
+                      .orElseThrow(() -> new ResourceNotFoundException("student", "id", studentId));
+      playlist.setStudent(student);                
       return playlist;
    }
 }

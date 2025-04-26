@@ -88,4 +88,17 @@ public class StudentController {
       ApiResponse apiResponse = new ApiResponse("Playlist added successfully", true);
       return new ResponseEntity<>(apiResponse, HttpStatus.OK);
    }
+
+   @DeleteMapping("/student/remove-playlist")
+   // @Operation(summary = "Remove playlist from student")
+   public ResponseEntity<ApiResponse> removePlaylistByStudentIdAndPlaylistId(
+         @RequestParam Map<String, String> studentIdAndPlaylistIdMap) {
+      String studentId = Optional.ofNullable(studentIdAndPlaylistIdMap.get("studentId"))
+            .orElseThrow(() -> new ResourceNotFoundException("Student ID", "key value", "studentId"));
+      String playlistId = Optional.ofNullable(studentIdAndPlaylistIdMap.get("playlistId"))
+            .orElseThrow(() -> new ResourceNotFoundException("Playlist ID", "key value", "playlistId"));
+      this.studentService.removePlaylist(studentId, playlistId);
+      ApiResponse apiResponse = new ApiResponse("Playlist removed successfully", true);
+      return new ResponseEntity<>(apiResponse, HttpStatus.OK);
+   }
 }

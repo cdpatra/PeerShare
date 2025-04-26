@@ -32,6 +32,7 @@ function Playlist() {
             }
 
             const playlistData = await response.json();
+            
             // setPlaylistData(playlistData);
             
             //fetching studentdto playlist
@@ -123,7 +124,7 @@ function Playlist() {
                            setCurrentFilter("");
                            setIsFilterSelected(false);
                         }}
-                        className="px-4 py-2 text-gray-700 hover:bg-blue-100 hover:text-blue-800 cursor-pointer transition-colors duration-200">
+                        className="px-4 py-2 text-gray-700 transition-colors duration-200 cursor-pointer hover:bg-blue-100 hover:text-blue-800">
                         All
                      </li>
                      {categories?.map((category) => (
@@ -157,7 +158,7 @@ function Playlist() {
                      </div>
                   );
                } else {
-                  return <div className="text-center mt-48 text-2xl text-gray-400">No playlist available</div>;
+                  return <div className="mt-48 text-2xl text-center text-gray-400">No playlist available</div>;
                }
             })()}
          </Box>

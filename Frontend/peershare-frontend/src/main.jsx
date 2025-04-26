@@ -12,6 +12,7 @@ import PlaylistInfo from "./components/playlistInfo/PlaylistInfo.jsx";
 import Categories from "./components/categories/Categories.jsx";
 import VideoSection from "./components/videoSection/VideoSection.jsx";
 import { MyPlaylist } from "./components/my-playlists/MyPlaylist.jsx";
+import { ContributePlaylist } from "./components/playlist/ContributePlaylist.jsx";
 
 const router = createBrowserRouter([
    {
@@ -57,6 +58,10 @@ const router = createBrowserRouter([
          {
             path:"my-playlists",
             element:<MyPlaylist/>
+         },
+         {
+            path:"contribute-playlist",
+            element:<ContributePlaylist/>
          }
       ],
    },

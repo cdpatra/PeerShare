@@ -25,4 +25,6 @@ public interface StudentService {
 
    // Add playlist
    void addPlaylist(String studentId, String playlistId);
+
+   void removePlaylist(String studentId, String playlistId);
 }

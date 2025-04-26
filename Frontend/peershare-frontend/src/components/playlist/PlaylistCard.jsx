@@ -5,6 +5,7 @@ import axios from "axios";
 function PlaylistCard({ playlistData }) {
    const { playlistId ,playlistURL, categoryName, review } = playlistData;
    const [playlistCardData, setPlaylistCardData] = useState([]);
+   const [added, setAdded] = useState(false);
    
 
 const addPlaylistHandler = async () => {
@@ -26,7 +27,7 @@ const addPlaylistHandler = async () => {
        },
       }
     );
-
+    setAdded(true);
     console.log("Playlist added:", response.data.message);
   } catch (err) {
     if (err.response) {
@@ -53,29 +54,30 @@ const addPlaylistHandler = async () => {
       })();
    }, []);
    return (
-      <div className="bg-neutral-100 flex flex-col justify-between rounded-xl overflow-hidden p-2 shadow-md border border-neutral-300">
+      <div className="flex flex-col justify-between p-2 overflow-hidden border shadow-md bg-neutral-100 rounded-xl border-neutral-300">
          <Link to={`/dashboard/playlist/${playlistURL}/${playlistId}`}>
             <img
-               className="rounded-xl mb-2 border border-neutral-300"
+               className="mb-2 border rounded-xl border-neutral-300"
                src={playlistCardData?.snippet?.thumbnails?.standard?.url}
                alt="thumbnail"
             />
          </Link>
-         <div className="title font-semibold text-xl text-neutral-700">{playlistCardData?.snippet?.title}</div>
-         <div className="instructor-name text-sm text-neutral-500">{playlistCardData?.snippet?.channelTitle}</div>
-         <div className="lower-section flex justify-between items-center">
-            <div className="playlist-info my-2 text-neutral-600">
+         <div className="text-xl font-semibold title text-neutral-700">{playlistCardData?.snippet?.title}</div>
+         <div className="text-sm instructor-name text-neutral-500">{playlistCardData?.snippet?.channelTitle}</div>
+         <div className="flex items-center justify-between lower-section">
+            <div className="my-2 playlist-info text-neutral-600">
                <div className="category-name ">{categoryName}</div>
                <div className="no-of-lectures">{playlistCardData?.contentDetails?.itemCount} Lectures</div>
             </div>
-            <div className="rating-add-button-container flex gap-2 items-center">
-               <div className="rating flex gap-1 items-center bg-neutral-200 border border-neutral-300 text-neutral-700 px-3 py-1 rounded-2xl">
+            <div className="flex items-center gap-2 rating-add-button-container">
+               <div className="flex items-center gap-1 px-3 py-1 border rating bg-neutral-200 border-neutral-300 text-neutral-700 rounded-2xl">
                   <img src="/images/star.png" alt="rating stars" className="w-5" />
                   {review}
                </div>
-               <button onClick={addPlaylistHandler} className="add-button px-4 py-2 bg-cyan-400 rounded-md border border-cyan-500 hover:bg-cyan-500">
-                  {playlistData.added?"Added":"Add"}
+               <button onClick={addPlaylistHandler} className="px-4 py-2 border rounded-md add-button bg-cyan-400 border-cyan-500 hover:bg-cyan-500">
+                  {playlistData.added ||added ?"Added":"Add"}
                </button>
+               
             </div>
          </div>
       </div>

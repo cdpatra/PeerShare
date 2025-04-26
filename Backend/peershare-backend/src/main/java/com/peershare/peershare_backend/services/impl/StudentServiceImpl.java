@@ -111,6 +111,16 @@ public class StudentServiceImpl implements StudentService {
       this.studentRepository.save(student);
    }
 
+   @Override
+   public void removePlaylist(String studentId, String playlistId) {
+      Student student = this.studentRepository.findById(studentId)
+            .orElseThrow(() -> new ResourceNotFoundException("Student", "id", studentId));
+      Playlist playlist = this.playlistRepository.findById(playlistId)
+            .orElseThrow(() -> new ResourceNotFoundException("Playlist", "id", playlistId));
+      student.removePlaylist(playlist);
+      this.studentRepository.save(student);
+   }
+
    public StudentDto studentToDto(Student student) {
       StudentDto studentDto = this.modelMapper.map(student, StudentDto.class);
 

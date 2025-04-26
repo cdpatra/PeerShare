@@ -6,6 +6,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
@@ -16,9 +18,12 @@ import jakarta.persistence.JoinTable;
 import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
-import lombok.Data;
+import lombok.*;
 
-@Data
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "students")
 public class Student implements Serializable {
@@ -43,11 +48,16 @@ public class Student implements Serializable {
    @Lob
    private String description;
 
-   @ManyToMany(fetch = FetchType.EAGER)
+   @ManyToMany(fetch = FetchType.LAZY)
+   @JsonManagedReference
    private Set<Playlist> myPlaylists = new HashSet<>();
 
    public void addPlaylist(Playlist playlist) {
       this.myPlaylists.add(playlist);
+   }
+
+   public void removePlaylist(Playlist playlist) {
+      this.myPlaylists.remove(playlist);
    }
 
    @ManyToMany(fetch = FetchType.EAGER)
