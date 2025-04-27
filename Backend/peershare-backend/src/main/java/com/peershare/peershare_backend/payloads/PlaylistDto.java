@@ -10,9 +10,9 @@ public class PlaylistDto {
    private String instructorChannelName;
    private double review;
    private String playlistURL;
-   private String studentId;
    
    // These are not handle by the modal mapper, have to handle explicitly;
-   private String categoryName;
+   private String studentId;
+   // private String categoryName;
    private int categoryId;
 }

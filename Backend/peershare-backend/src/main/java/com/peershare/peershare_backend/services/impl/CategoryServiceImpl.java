@@ -62,7 +62,7 @@ public class CategoryServiceImpl implements CategoryService {
       Category originalCategory = this.categoryRepository.findById(id)
             .orElseThrow(() -> new ResourceNotFoundException("Category", "id", id));
 
-      originalCategory.setCategoryName(updatedCategoryDto.getCategoryName());
+      // originalCategory.setCategoryName(updatedCategoryDto.getCategoryName());
       originalCategory.setThumbnail(updatedCategoryDto.getThumbnail());
       originalCategory.setPlaylists(playlistDtosToPlaylists(updatedCategoryDto.getPlaylistsDtos()));
 
@@ -105,7 +105,7 @@ public class CategoryServiceImpl implements CategoryService {
          return playlists.stream().map((playlist) -> {
             PlaylistDto playlistDto = this.modelMapper.map(playlist, PlaylistDto.class);
             playlistDto.setCategoryId(playlist.getCategory().getCategoryId());
-            playlistDto.setCategoryName(playlist.getCategory().getCategoryName());
+            // playlistDto.setCategoryName(playlist.getCategory().getCategoryName());
             return playlistDto;
          }).collect(Collectors.toList());
    }

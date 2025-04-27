@@ -12,6 +12,8 @@ function Playlist() {
 
    const filterRef = useRef(); // Ref for detecting outside click
 
+   console.log(playlistData);
+
    useEffect(() => {
       (async () => {
          try {
@@ -53,7 +55,6 @@ function Playlist() {
                obj.added=true;
                return obj;
              });
-             console.log(addedPlaylists);
 
              const mergedArray = [
                ...addedPlaylists,
@@ -64,11 +65,6 @@ function Playlist() {
 
              setPlaylistData(mergedArray);
              
-            //  console.log(addedPlaylists);
-             console.log(mergedArray);
-             
-
-
             // Fetching all category data
             const { data } = await axios.get("http://localhost:8080/users/category", {
                headers: {
@@ -76,6 +72,7 @@ function Playlist() {
                },
             });
             setCategories(data);
+            console.log(data);
          } catch (error) {
             console.error(error.message);
          }
@@ -131,11 +128,11 @@ function Playlist() {
                         <li
                            key={category.categoryId}
                            onClick={() => {
-                              setCurrentFilter(category.categoryName);
+                              setCurrentFilter(category.categoryId);
                               setIsFilterSelected(false);
                            }}
                            className={`px-4 py-2 text-gray-700 hover:bg-blue-100 hover:text-blue-800 cursor-pointer transition-colors duration-200 ${
-                              currentFilter === category.categoryName
+                              currentFilter === category.categoryId
                                  ? "bg-blue-200 text-blue-800"
                                  : "bg-inherit text-gray-700"
                            }`}>
@@ -148,7 +145,7 @@ function Playlist() {
 
             {(() => {
                const filteredPlaylist = playlistData
-                  ?.filter((playlist) => (currentFilter === "" ? true : playlist.categoryName === currentFilter))
+                  ?.filter((playlist) => (currentFilter === "" ? true : playlist.categoryId === currentFilter))
                   ?.map((data) => <PlaylistCard key={data.playlistId} playlistData={data} />);
 
                if (filteredPlaylist.length) {

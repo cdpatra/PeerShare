@@ -17,7 +17,7 @@ function MyPlaylistCard({ playlistData,fetchStudentData }) {
      }
      
       try {
-         const response = await axios.delete(
+          await axios.delete(
                "http://localhost:8080/users/student/remove-playlist",
                {
                  params: {
@@ -62,7 +62,7 @@ function MyPlaylistCard({ playlistData,fetchStudentData }) {
    }, []);
    return (
       <div className="flex flex-col justify-between p-2 overflow-hidden border shadow-md bg-neutral-100 rounded-xl border-neutral-300">
-         <Link to={`/dashboard/playlist/${playlistURL}/${playlistId}`}>
+         <Link to={`/dashboard/my-playlist/${playlistURL}/${playlistId}`}>
             <img
                className="mb-2 border rounded-xl border-neutral-300"
                src={playlistCardData?.snippet?.thumbnails?.standard?.url}

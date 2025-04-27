@@ -1,6 +1,8 @@
 package com.peershare.peershare_backend.entities;
 
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
@@ -10,9 +12,11 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.*;
 
+@Data
 @Getter
 @Setter
 @AllArgsConstructor
@@ -27,7 +31,15 @@ public class Playlist implements Serializable{
    private String playlistId;
    private int noOfLectures;
    private String instructorChannelName;
-   private double review;
+
+   // private double review;
+   // private double totalReviews;
+   // private long totalReviewers;
+
+   @OneToMany(mappedBy = "playlist")
+   private Set<Upvote> upvotes = new HashSet<>();
+
+   @Column(unique = true)
    private String playlistURL;
 
    @ManyToOne

@@ -131,7 +131,7 @@ public class StudentServiceImpl implements StudentService {
                .map((playlist) -> {
                   PlaylistDto playlistDto = modelMapper.map(playlist, PlaylistDto.class);
                   playlistDto.setCategoryId(playlist.getCategory().getCategoryId());
-                  playlistDto.setCategoryName(playlist.getCategory().getCategoryName());
+                  // playlistDto.setCategoryName(playlist.getCategory().getCategoryName());
                   return playlistDto;
                }).collect(Collectors.toList());
       }

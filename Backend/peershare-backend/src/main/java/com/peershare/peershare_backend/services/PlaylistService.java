@@ -11,6 +11,8 @@ public interface PlaylistService {
 
    PlaylistDto addPlaylist(PlaylistDto playlistDto);
 
+   public Boolean getPlaylistByPlaylistURL(String playlistURL);
+
    PlaylistDto updatePlaylist(PlaylistDto updatedPlaylistDto, String id);
 
    void deletePlaylistById(String id);

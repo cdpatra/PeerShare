@@ -18,8 +18,12 @@ import com.peershare.peershare_backend.payloads.ApiResponse;
 import com.peershare.peershare_backend.payloads.PlaylistDto;
 import com.peershare.peershare_backend.services.PlaylistService;
 
+import lombok.extern.slf4j.Slf4j;
+
+
 @RestController
 @RequestMapping("/users")
+@Slf4j
 public class PlaylistController {
 
    @Autowired
@@ -37,8 +41,15 @@ public class PlaylistController {
       return new ResponseEntity<>(playlist, HttpStatus.OK);
    }
 
+
+
    @PostMapping("/playlist")
-   public ResponseEntity<PlaylistDto> addPlaylist(@RequestBody PlaylistDto playlistDto) {
+   public ResponseEntity<Object> addPlaylist(@RequestBody PlaylistDto playlistDto) {
+      // system.out.println("Playlist already exists");
+      log.info("Adding a new playlist");
+      if(this.playlistService.getPlaylistByPlaylistURL(playlistDto.getPlaylistURL())) {
+         return new ResponseEntity<>(new ApiResponse("Playlist already exists", false), HttpStatus.BAD_REQUEST);
+      }
       PlaylistDto playlist = this.playlistService.addPlaylist(playlistDto);
       return new ResponseEntity<>(playlist, HttpStatus.CREATED);
    }
@@ -46,14 +57,14 @@ public class PlaylistController {
    @DeleteMapping("/playlist")
    public ResponseEntity<ApiResponse> deleteAllPlaylists() {
       this.playlistService.deleteAllPlaylist();
-      ApiResponse apiResponse= new ApiResponse("All playlists deleted successfully",true);
-      return new ResponseEntity<>(apiResponse ,HttpStatus.OK);
+      ApiResponse apiResponse = new ApiResponse("All playlists deleted successfully", true);
+      return new ResponseEntity<>(apiResponse, HttpStatus.OK);
    }
 
    @DeleteMapping("/playlist/{id}")
    public ResponseEntity<ApiResponse> deletePlaylistById(@PathVariable String id) {
       this.playlistService.deletePlaylistById(id);
-      ApiResponse apiResponse = new ApiResponse("Playlist deleted successfully",true);
+      ApiResponse apiResponse = new ApiResponse("Playlist deleted successfully", true);
       return new ResponseEntity<>(apiResponse, HttpStatus.OK);
    }
 

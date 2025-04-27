@@ -46,7 +46,6 @@ const addPlaylistHandler = async () => {
                `https://www.googleapis.com/youtube/v3/playlists?part=snippet,contentDetails&id=${playlistURL}&key=${API_KEY}`
             );
             const data = await response.json();
-            console.log(data);
             setPlaylistCardData(data.items[0]);
          } catch (error) {
             console.error(error.message);

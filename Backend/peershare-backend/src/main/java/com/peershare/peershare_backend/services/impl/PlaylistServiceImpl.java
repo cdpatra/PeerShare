@@ -70,6 +70,12 @@ public class PlaylistServiceImpl implements PlaylistService {
       return playlistToDto(playlist);
    }
 
+   // Get playlist by using playlist URL;
+   @Override
+   public Boolean getPlaylistByPlaylistURL(String playlistURL) {
+      return this.playlistRepository.findByPlaylistURL(playlistURL).isPresent();
+   }
+   
    // Update the playlist
    @Override
    public PlaylistDto updatePlaylist(PlaylistDto updatedPlaylistDto, String id) {
@@ -81,7 +87,7 @@ public class PlaylistServiceImpl implements PlaylistService {
    private PlaylistDto playlistToDto(Playlist playlist) {
       PlaylistDto playlistDto = this.modelMapper.map(playlist, PlaylistDto.class);
       playlistDto.setCategoryId(playlist.getCategory().getCategoryId());
-      playlistDto.setCategoryName(playlist.getCategory().getCategoryName());
+      // playlistDto.setCategoryName(playlist.getCategory().getCategoryName());
       playlistDto.setStudentId(playlist.getStudent().getRollNo());
       return playlistDto;
    }
@@ -92,10 +98,10 @@ public class PlaylistServiceImpl implements PlaylistService {
       Category category = this.categoryRepository.findById(categoryId)
             .orElseThrow(() -> new ResourceNotFoundException("Category", "id", categoryId));
       playlist.setCategory(category);
-      String studentId=playlistDto.getStudentId();
-      Student student =this.studentRepository.findById(studentId)
-                      .orElseThrow(() -> new ResourceNotFoundException("student", "id", studentId));
-      playlist.setStudent(student);                
+      String studentId = playlistDto.getStudentId();
+      Student student = this.studentRepository.findById(studentId)
+            .orElseThrow(() -> new ResourceNotFoundException("student", "id", studentId));
+      playlist.setStudent(student);
       return playlist;
    }
 }
