@@ -14,7 +14,6 @@ public class PeerShareBackendApplication implements CommandLineRunner {
 
 	public static void main(String[] args) {
 		SpringApplication.run(PeerShareBackendApplication.class, args);
-		
 	}
 
 	@Autowired
