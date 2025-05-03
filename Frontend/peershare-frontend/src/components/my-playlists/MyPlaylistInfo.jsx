@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
+import axios from "axios";
 
 const API_KEY = "AIzaSyCZBUxV9M35c_dijr_O70-EpYey-VFhRKw"; // ⚠️ Replace with your actual API key
 
@@ -48,6 +49,49 @@ const MyPlaylistInfo = () => {
       alert("Playlist link copied to clipboard!");
    };
 
+   // Function to handle the "Generate Summary" button click
+   const GEMINI_API_KEY = "AIzaSyDqP_grW4snuk6GHYhFUSLI2B2OkwfY7lw";
+
+   async function summarizeLectures() {
+      try {
+         const { data: lectureArray } = await axios.get("http://localhost:8080/users/note/entire-playlist-notes", {
+            params: {
+               studentId: localStorage.getItem("rollNo"),
+               playlistId: playlistId,
+            },
+            headers: {
+               Authorization: `Bearer ${localStorage.getItem("token")}`,
+            },
+         });
+
+         console.log(lectureArray);
+         const formattedInput = lectureArray
+            .map((item) => `Lecture ${item.lectureNo}:\n${item.noteContent}`)
+            .join("\n\n");
+
+         const prompt = `Summarize each lecture below and return the result in this format:\nLecture 1:\n...\nLecture 2:\n...\n\nLectures:\n\n${formattedInput}`;
+
+         const response = await fetch(
+            `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_API_KEY}`,
+            {
+               method: "POST",
+               headers: {
+                  "Content-Type": "application/json",
+               },
+               body: JSON.stringify({
+                  contents: [{ parts: [{ text: prompt }] }],
+               }),
+            }
+         );
+
+         const data = await response.json();
+         console.log(data?.candidates?.[0]?.content?.parts?.[0]?.text || "No summary received.");
+      } catch (error) {
+         console.error("Error summarizing lectures:", error);
+         alert("Error summarizing lectures. Please try again later.");
+      }
+   }
+
    return (
       <div className="flex flex-col md:flex-row gap-6 p-6 bg-white text-black min-h-screen mt-20">
          {/* Left Section (Playlist Info) */}
@@ -80,12 +124,17 @@ const MyPlaylistInfo = () => {
                      className="bg-gray-200 text-black px-6 py-2 rounded-lg shadow-md hover:bg-gray-300">
                      📤 Share Playlist
                   </button>
+                  <button
+                     onClick={summarizeLectures}
+                     className="bg-gray-200 text-black px-6 py-2 rounded-lg shadow-md hover:bg-blue-400">
+                     🤖 Generate Summary
+                  </button>
                </div>
 
                {/* Description with Scroll */}
-               <div className="mt-4 max-h-32 overflow-y-auto text-gray-700 scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-200">
+               {/* <div className="mt-4 max-h-32 overflow-y-auto text-gray-700 scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-200">
                   {playlistDetails.snippet.description}
-               </div>
+               </div> */}
             </div>
          )}
 

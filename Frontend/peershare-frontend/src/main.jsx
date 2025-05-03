@@ -15,6 +15,7 @@ import { MyPlaylist } from "./components/my-playlists/MyPlaylist.jsx";
 import { ContributePlaylist } from "./components/playlist/ContributePlaylist.jsx";
 import MyPlaylistInfo from "./components/my-playlists/MyPlaylistInfo.jsx";
 import MyVideoSection from "./components/my-playlists/MyVideoSection.jsx";
+import AiSummarizer from "./components/ai-summarizer/AiSummarizer.jsx";
 
 const router = createBrowserRouter([
    {
@@ -72,6 +73,10 @@ const router = createBrowserRouter([
          {
             path: "contribute-playlist",
             element: <ContributePlaylist />,
+         },
+         {
+            path: "ai-summarizer",
+            element: <AiSummarizer />, 
          },
       ],
    },
