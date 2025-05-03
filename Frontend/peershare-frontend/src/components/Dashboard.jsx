@@ -29,11 +29,9 @@ import Brightness7Icon from "@mui/icons-material/Brightness7";
 import NightlightRoundIcon from "@mui/icons-material/NightlightRound";
 import { Navigate, Outlet, useNavigate } from "react-router-dom";
 import CollectionsBookmarkIcon from "@mui/icons-material/CollectionsBookmark";
-import AddBoxIcon from '@mui/icons-material/AddBox';
-
-
-
-
+import AddBoxIcon from "@mui/icons-material/AddBox";
+import AiSummarizer from "./ai-summarizer/AiSummarizer";
+import AutoAwesomeIcon from "@mui/icons-material/AutoAwesome";
 
 
 const drawerWidth = 240;
@@ -81,7 +79,7 @@ export default function Dashboard() {
          </DrawerHeader>
          <Divider />
          <List>
-            {["Home", "Playlist", "Peer","My playlists","Contribute Playlist" ].map((text) => (
+            {["Home", "Playlist", "Peer", "My playlists", "Contribute Playlist", "AI Summarizer"].map((text) => (
                <ListItem key={text} disablePadding>
                   <ListItemButton
                      onClick={() => {
@@ -89,14 +87,16 @@ export default function Dashboard() {
                         if (text === "Peer") navigate("/dashboard/peer");
                         if (text === "Playlist") navigate("/dashboard/playlist");
                         if (text === "My playlists") navigate("/dashboard/my-playlists");
-                        if(text== "Contribute Playlist") navigate("/dashboard/contribute-playlist")
+                        if (text == "Contribute Playlist") navigate("/dashboard/contribute-playlist");
+                        if (text == "AI Summarizer") navigate("/dashboard/ai-summarizer");
                      }}>
                      <ListItemIcon>
                         {text === "Home" && <HomeIcon />}
                         {text === "Playlist" && <PlaylistAddIcon />}
                         {text === "Peer" && <PeopleIcon />}
-                        {text=="My playlists" && <CollectionsBookmarkIcon/>}
-                        {text=="Contribute Playlist" && <AddBoxIcon/> }
+                        {text == "My playlists" && <CollectionsBookmarkIcon />}
+                        {text == "Contribute Playlist" && <AddBoxIcon />}
+                        {text == "AI Summarizer" && <AutoAwesomeIcon />}
                      </ListItemIcon>
                      <ListItemText primary={text} />
                   </ListItemButton>
@@ -113,7 +113,7 @@ export default function Dashboard() {
       localStorage.removeItem("lastName");
       navigate("/");
       alert("Logout successful");
-   }; 
+   };
 
    return (
       <ThemeProvider theme={modetheme}>
