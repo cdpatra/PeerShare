@@ -1,0 +1,101 @@
+.markdown-notes h1 {
+   font-family: "Merriweather", serif;
+   font-size: 2.3em;
+   font-weight: 700;
+   margin-block: 0.8rem;
+}
+.markdown-notes h2 {
+   font-family: "Merriweather", serif;
+   font-size: 1.5rem;
+   font-weight: 400;
+   margin-block: 0.8rem;
+}
+.markdown-notes h3 {
+   font-family: "Merriweather", serif;
+   font-size: 1.4rem;
+   font-weight: 900;
+   margin-block: 0.8rem;
+}
+.markdown-notes h4 {
+   font-family: "Merriweather", serif;
+}
+.markdown-notes h5 {
+   font-family: "Merriweather", serif;
+}
+.markdown-notes h6 {
+   font-family: "Merriweather", serif;
+}
+.markdown-notes p {
+   font-family: "Lato", sans-serif;
+   font-size: 1.2rem;
+}
+.markdown-notes ol {
+   font-family: "Times New Roman", Times, serif;
+   font-size: 1.1rem;
+   list-style-type: decimal;
+   margin-left: 2rem;
+}
+.markdown-notes ul {
+   font-family: "Times New Roman", Times, serif;
+   font-size: 1.1rem;
+   list-style-type: none;
+   margin-left: 2rem;
+}
+.markdown-notes ul li::before {
+   content: "\2022";
+   color: orangered;
+   display: inline-block;
+   width: 1em;
+   margin-left: -1em;
+}
+.markdown-notes hr {
+   margin-block: 1rem;
+   border-color: rgba(255, 68, 0, 0.5);
+   border-width: 1.7px;
+   border-radius: 30px;
+}
+.markdown-notes pre {
+   font-family: "Fira Code", monospace;
+   font-size: small;
+   background-color: rgba(211, 211, 211, 0.607);
+   padding: 1rem;
+   border-radius: 10px;
+   font-weight: 100;
+}
+.markdown-notes code {
+   font-family: "Fira Code", monospace;
+   font-size: small;
+   font-weight: 100;
+}
+.markdown-notes a {
+   font-family: Arial, Helvetica, sans-serif;
+   text-decoration: underline;
+   font-size: 1.1rem;
+   color: orange;
+}
+.markdown-notes blockquote p {
+   font-family: "Roboto Slab", serif;
+   font-weight: 500;
+   font-size: 0.9rem;
+   margin-block: 1rem;
+   padding-inline: 1rem;
+   padding-block: 1.5rem;
+   background-color: rgba(211, 211, 211, 0.607);
+   border-radius: 5px 10px 40px 5px;
+   border-left: 0.4rem solid orangered;
+}
+
+@media print {
+   body {
+      print-color-adjust: exact;
+   }
+   .markdown-notes {
+      width: 100%;
+   }
+   .text-editor {
+      display: none;
+   }
+   button {
+      display: none;
+   }
+}
