@@ -32,13 +32,6 @@ public class Playlist implements Serializable{
    private int noOfLectures;
    private String instructorChannelName;
 
-   // private double review;
-   // private double totalReviews;
-   // private long totalReviewers;
-
-   @OneToMany(mappedBy = "playlist")
-   private Set<Upvote> upvotes = new HashSet<>();
-
    @Column(unique = true)
    private String playlistURL;
 

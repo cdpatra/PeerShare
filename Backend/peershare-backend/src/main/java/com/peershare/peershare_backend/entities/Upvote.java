@@ -6,15 +6,21 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import lombok.Data;
+import jakarta.persistence.Table;
+import jakarta.persistence.UniqueConstraint;
+import lombok.*;
 
-@Data
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
+@Table(name = "upvote", uniqueConstraints = @UniqueConstraint(columnNames = { "roll_no", "playlist_id" }))
 public class Upvote {
-  
+
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private int upvoteId;
+  private int id;
 
   @ManyToOne
   @JoinColumn(name = "roll_no", nullable = false)

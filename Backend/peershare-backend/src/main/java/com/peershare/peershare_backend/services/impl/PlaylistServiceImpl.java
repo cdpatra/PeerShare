@@ -10,11 +10,13 @@ import org.springframework.stereotype.Service;
 import com.peershare.peershare_backend.entities.Category;
 import com.peershare.peershare_backend.entities.Playlist;
 import com.peershare.peershare_backend.entities.Student;
+import com.peershare.peershare_backend.entities.Upvote;
 import com.peershare.peershare_backend.exceptions.ResourceNotFoundException;
 import com.peershare.peershare_backend.payloads.PlaylistDto;
 import com.peershare.peershare_backend.repositories.CategoryRepository;
 import com.peershare.peershare_backend.repositories.PlaylistRepository;
 import com.peershare.peershare_backend.repositories.StudentRepository;
+import com.peershare.peershare_backend.repositories.UpvoteRepository;
 import com.peershare.peershare_backend.services.PlaylistService;
 
 import ch.qos.logback.classic.Logger;
@@ -33,6 +35,9 @@ public class PlaylistServiceImpl implements PlaylistService {
 
    @Autowired
    ModelMapper modelMapper;
+
+   @Autowired
+   UpvoteRepository upvoteRepository;
 
    // Add a single playlist;
    @Override
@@ -89,6 +94,10 @@ public class PlaylistServiceImpl implements PlaylistService {
       playlistDto.setCategoryId(playlist.getCategory().getCategoryId());
       // playlistDto.setCategoryName(playlist.getCategory().getCategoryName());
       playlistDto.setStudentId(playlist.getStudent().getRollNo());
+
+      List<String> rollNosByPlaylist = this.upvoteRepository.findRollNosByPlaylist(playlist);
+      playlistDto.setUpvotedRollNos(rollNosByPlaylist);
+      
       return playlistDto;
    }
 

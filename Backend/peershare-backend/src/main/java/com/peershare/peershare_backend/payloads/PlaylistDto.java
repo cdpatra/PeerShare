@@ -1,6 +1,8 @@
 package com.peershare.peershare_backend.payloads;
 
 
+import java.util.List;
+
 import lombok.Data;
 
 @Data
@@ -15,4 +17,5 @@ public class PlaylistDto {
    private String studentId;
    // private String categoryName;
    private int categoryId;
+   private List<String> upvotedRollNos;
 }
