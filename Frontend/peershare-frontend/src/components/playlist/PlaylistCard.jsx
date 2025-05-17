@@ -1,42 +1,68 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import { HiThumbUp } from "react-icons/hi";
 
-function PlaylistCard({ playlistData }) {
-   const { playlistId ,playlistURL, categoryName, review } = playlistData;
+function PlaylistCard({ fetchPlaylists, playlistData }) {
+   const { playlistId, playlistURL, categoryName, review } = playlistData;
    const [playlistCardData, setPlaylistCardData] = useState([]);
    const [added, setAdded] = useState(false);
-   
 
-const addPlaylistHandler = async () => {
-  
-  const studentId = localStorage.getItem("rollNo");
-  const token =localStorage.getItem("token");
+   const addPlaylistHandler = async () => {
+      const studentId = localStorage.getItem("rollNo");
+      const token = localStorage.getItem("token");
 
-  try {
-    const response = await axios.put(
-      `http://localhost:8080/users/student/add-playlist`,
-      {},
-      {
-        params: {
-          playlistId,
-          studentId,
-        },
-        headers: {
-         Authorization: `Bearer ${token}`,
-       },
+      try {
+         const response = await axios.put(
+            `http://localhost:8080/users/student/add-playlist`,
+            {},
+            {
+               params: {
+                  playlistId,
+                  studentId,
+               },
+               headers: {
+                  Authorization: `Bearer ${token}`,
+               },
+            }
+         );
+         setAdded(true);
+         console.log("Playlist added:", response.data.message);
+      } catch (err) {
+         if (err.response) {
+            console.error("Server error:", err.response.data.message);
+         } else {
+            console.error("Network error:", err.message);
+         }
       }
-    );
-    setAdded(true);
-    console.log("Playlist added:", response.data.message);
-  } catch (err) {
-    if (err.response) {
-      console.error("Server error:", err.response.data.message);
-    } else {
-      console.error("Network error:", err.message);
-    }
-  }
-};
+   };
+
+   const upvoteHandler = async () => {
+      const studentId = localStorage.getItem("rollNo");
+      const token = localStorage.getItem("token");
+
+      try {
+         const response = await axios.post(
+            `http://localhost:8080/upvote`,
+            {
+               playlistId,
+               studentId,
+            },
+            {
+               headers: {
+                  Authorization: `Bearer ${token}`,
+               },
+            }
+         );
+         fetchPlaylists();
+      } catch (err) {
+         if (err.response) {
+            console.error("Server error:", err.response.data.message);
+         } else {
+            console.error("Network error:", err.message);
+         }
+      }
+   };
 
    useEffect(() => {
       (async () => {
@@ -52,6 +78,8 @@ const addPlaylistHandler = async () => {
          }
       })();
    }, []);
+
+   
    return (
       <div className="flex flex-col justify-between p-2 overflow-hidden border shadow-md bg-neutral-100 rounded-xl border-neutral-300">
          <Link to={`/dashboard/playlist/${playlistURL}/${playlistId}`}>
@@ -69,14 +97,23 @@ const addPlaylistHandler = async () => {
                <div className="no-of-lectures">{playlistCardData?.contentDetails?.itemCount} Lectures</div>
             </div>
             <div className="flex items-center gap-2 rating-add-button-container">
-               <div className="flex items-center gap-1 px-3 py-1 border rating bg-neutral-200 border-neutral-300 text-neutral-700 rounded-2xl">
-                  <img src="/images/star.png" alt="rating stars" className="w-5" />
+               <div
+                  onClick={upvoteHandler}
+                  className="flex items-center gap-1 p-1 border rating bg-neutral-200 border-neutral-300 text-neutral-700 rounded-2xl cursor-pointer hover:bg-neutral-300">
+                  <HiThumbUp
+                     className={`text-xl ${
+                        playlistData?.upvotedRollNos?.includes(localStorage.getItem("rollNo"))
+                          ? "text-emerald-400"
+                          : "text-neutral-400"
+                      }`}
+                  />
                   {review}
                </div>
-               <button onClick={addPlaylistHandler} className="px-4 py-2 border rounded-md add-button bg-cyan-400 border-cyan-500 hover:bg-cyan-500">
-                  {playlistData.added ||added ?"Added":"Add"}
+               <button
+                  onClick={addPlaylistHandler}
+                  className="px-4 py-2 border rounded-md add-button bg-cyan-400 border-cyan-500 hover:bg-cyan-500">
+                  {playlistData.added || added ? "Added" : "Add"}
                </button>
-               
             </div>
          </div>
       </div>

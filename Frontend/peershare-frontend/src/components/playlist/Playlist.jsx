@@ -12,72 +12,70 @@ function Playlist() {
 
    const filterRef = useRef(); // Ref for detecting outside click
 
-   console.log(playlistData);
+   const fetchPlaylists = async () => {
+      try {
+         const token = localStorage.getItem("token");
+         const studentId = localStorage.getItem("rollNo");
+
+         // Fetching all playlist data
+         const response = await fetch("http://localhost:8080/users/playlist", {
+            method: "GET",
+            headers: {
+               "Content-Type": "application/json",
+               Authorization: `Bearer ${token}`,
+            },
+         });
+
+         if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+         }
+
+         const playlistData = await response.json();
+
+         // setPlaylistData(playlistData);
+
+         //fetching studentdto playlist
+         const studentResponse = await fetch(`http://localhost:8080/users/student/${studentId}`, {
+            method: "GET",
+            headers: {
+               "Content-Type": "application/json",
+               Authorization: `Bearer ${token}`,
+            },
+         });
+
+         if (!studentResponse.ok) {
+            throw new Error(`Student API error! Status: ${studentResponse.status}`);
+         }
+
+         const studentData = await studentResponse.json();
+         const addedPlaylists = studentData.myPlaylistsDtos.map((obj) => {
+            obj.added = true;
+            return obj;
+         });
+
+         const mergedArray = [
+            ...addedPlaylists,
+            ...playlistData.filter(
+               (smallObj) => !addedPlaylists.some((bigObj) => bigObj.playlistId === smallObj.playlistId)
+            ),
+         ];
+
+         setPlaylistData(mergedArray);
+
+         // Fetching all category data
+         const { data } = await axios.get("http://localhost:8080/users/category", {
+            headers: {
+               Authorization: `Bearer ${token}`,
+            },
+         });
+         setCategories(data);
+      } catch (error) {
+         console.error(error.message);
+      }
+   };
 
    useEffect(() => {
-      (async () => {
-         try {
-            const token = localStorage.getItem("token");
-            const studentId=localStorage.getItem("rollNo");
-
-            // Fetching all playlist data
-            const response = await fetch("http://localhost:8080/users/playlist", {
-               method: "GET",
-               headers: {
-                  "Content-Type": "application/json",
-                  Authorization: `Bearer ${token}`,
-               },
-            });
-
-            if (!response.ok) {
-               throw new Error(`HTTP error! Status: ${response.status}`);
-            }
-
-            const playlistData = await response.json();
-            
-            // setPlaylistData(playlistData);
-            
-            //fetching studentdto playlist
-            const studentResponse = await fetch(`http://localhost:8080/users/student/${studentId}`, {
-               method: "GET",
-               headers: {
-                 "Content-Type": "application/json",
-                 Authorization: `Bearer ${token}`,
-               },
-             });
-       
-             if (!studentResponse.ok) {
-               throw new Error(`Student API error! Status: ${studentResponse.status}`);
-             }
-       
-             const studentData = await studentResponse.json();
-             const addedPlaylists=studentData.myPlaylistsDtos.map((obj)=>{
-               obj.added=true;
-               return obj;
-             });
-
-             const mergedArray = [
-               ...addedPlaylists,
-               ...playlistData.filter(
-                 smallObj => !addedPlaylists.some(bigObj => bigObj.playlistId === smallObj.playlistId)
-               )
-             ];
-
-             setPlaylistData(mergedArray);
-             
-            // Fetching all category data
-            const { data } = await axios.get("http://localhost:8080/users/category", {
-               headers: {
-                  Authorization: `Bearer ${token}`,
-               },
-            });
-            setCategories(data);
-            console.log(data);
-         } catch (error) {
-            console.error(error.message);
-         }
-         
-      })();
+      fetchPlaylists();
    }, []);
 
    // Close dropdown on outside click
@@ -146,7 +144,9 @@ function Playlist() {
             {(() => {
                const filteredPlaylist = playlistData
                   ?.filter((playlist) => (currentFilter === "" ? true : playlist.categoryId === currentFilter))
-                  ?.map((data) => <PlaylistCard key={data.playlistId} playlistData={data} />);
+                  ?.map((data) => (
+                     <PlaylistCard key={data.playlistId} fetchPlaylists={fetchPlaylists} playlistData={data} />
+                  ));
 
                if (filteredPlaylist.length) {
                   return (

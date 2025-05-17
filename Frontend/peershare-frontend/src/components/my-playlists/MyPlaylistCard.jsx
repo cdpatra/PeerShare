@@ -1,49 +1,41 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import { HiThumbUp } from "react-icons/hi";
 
-function MyPlaylistCard({ playlistData,fetchStudentData }) {
-   const { playlistId ,playlistURL, categoryName, review } = playlistData;
+function MyPlaylistCard({ playlistData, fetchStudentData }) {
+   const { playlistId, playlistURL, categoryName, review } = playlistData;
    const [playlistCardData, setPlaylistCardData] = useState([]);
-   
 
-    const removePlaylistHandler=async () => {
+   const removePlaylistHandler = async () => {
       const studentId = localStorage.getItem("rollNo");
-      const token =localStorage.getItem("token");
-      
+      const token = localStorage.getItem("token");
+
       if (!token) {
          console.error("Token is missing. Please log in again.");
          return;
-     }
-     
-      try {
-          await axios.delete(
-               "http://localhost:8080/users/student/remove-playlist",
-               {
-                 params: {
-                   playlistId,
-                   studentId,
-                 },
-                 headers: {
-                   Authorization: `Bearer ${token}`,
-                 },
-               }
-             );
-             
-        
-             fetchStudentData();
-      } catch (err) {
-         if (err.response) {  
+      }
 
+      try {
+         await axios.delete("http://localhost:8080/users/student/remove-playlist", {
+            params: {
+               playlistId,
+               studentId,
+            },
+            headers: {
+               Authorization: `Bearer ${token}`,
+            },
+         });
+
+         fetchStudentData();
+      } catch (err) {
+         if (err.response) {
             console.error("Server error:", err.response.data.message);
          } else {
             console.error("Network error:", err.message);
          }
       }
    };
-   
-   
- 
 
    useEffect(() => {
       (async () => {
@@ -78,13 +70,14 @@ function MyPlaylistCard({ playlistData,fetchStudentData }) {
             </div>
             <div className="flex items-center gap-2 rating-add-button-container">
                <div className="flex items-center gap-1 px-3 py-1 border rating bg-neutral-200 border-neutral-300 text-neutral-700 rounded-2xl">
-                  <img src="/images/star.png" alt="rating stars" className="w-5" />
+                  <HiThumbUp />
                   {review}
                </div>
-               <button onClick={removePlaylistHandler} className="px-4 py-2 border rounded-md add-button bg-cyan-400 border-cyan-500 hover:bg-cyan-500">
-                 Remove
+               <button
+                  onClick={removePlaylistHandler}
+                  className="px-4 py-2 border rounded-md add-button bg-cyan-400 border-cyan-500 hover:bg-cyan-500">
+                  Remove
                </button>
-              
             </div>
          </div>
       </div>

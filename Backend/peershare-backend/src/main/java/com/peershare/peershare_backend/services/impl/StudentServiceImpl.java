@@ -1,7 +1,7 @@
 package com.peershare.peershare_backend.services.impl;
 
 import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -22,6 +22,7 @@ import com.peershare.peershare_backend.repositories.CategoryRepository;
 import com.peershare.peershare_backend.repositories.PlaylistRepository;
 import com.peershare.peershare_backend.repositories.RolesRepository;
 import com.peershare.peershare_backend.repositories.StudentRepository;
+import com.peershare.peershare_backend.repositories.UpvoteRepository;
 import com.peershare.peershare_backend.services.StudentService;
 import com.peershare.peershare_backend.utils.AppConstants;
 
@@ -45,6 +46,9 @@ public class StudentServiceImpl implements StudentService {
 
    @Autowired
    PasswordEncoder passwordEncoder;
+
+   @Autowired
+   UpvoteRepository upvoteRepository;
 
    // Getting single student by id
    @Override
@@ -132,6 +136,9 @@ public class StudentServiceImpl implements StudentService {
                   PlaylistDto playlistDto = modelMapper.map(playlist, PlaylistDto.class);
                   playlistDto.setCategoryId(playlist.getCategory().getCategoryId());
                   // playlistDto.setCategoryName(playlist.getCategory().getCategoryName());
+                  List<String> rollNosByPlaylist = this.upvoteRepository.findRollNosByPlaylist(playlist);
+                  playlistDto.setUpvotedRollNos(rollNosByPlaylist);
+
                   return playlistDto;
                }).collect(Collectors.toList());
       }
@@ -144,7 +151,7 @@ public class StudentServiceImpl implements StudentService {
 
       Student student = this.modelMapper.map(studentDto, Student.class);
 
-      Set<Playlist> myPlaylists = new HashSet<>();
+      Set<Playlist> myPlaylists = new LinkedHashSet<>();
 
       if (!studentDto.getMyPlaylistsDtos().isEmpty()) {
          myPlaylists = studentDto.getMyPlaylistsDtos().stream().map((playlistDto) -> {

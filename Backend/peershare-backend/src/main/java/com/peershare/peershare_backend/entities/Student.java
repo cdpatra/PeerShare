@@ -2,7 +2,7 @@ package com.peershare.peershare_backend.entities;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -17,6 +17,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OrderBy;
 import jakarta.persistence.Table;
 import lombok.*;
 
@@ -50,7 +51,8 @@ public class Student implements Serializable {
 
    @ManyToMany(fetch = FetchType.LAZY)
    @JsonManagedReference
-   private Set<Playlist> myPlaylists = new HashSet<>();
+   @OrderBy("id ASC") // Add this to maintain consistent ordering
+   private Set<Playlist> myPlaylists = new LinkedHashSet<>();
 
    public void addPlaylist(Playlist playlist) {
       this.myPlaylists.add(playlist);
@@ -59,10 +61,10 @@ public class Student implements Serializable {
    public void removePlaylist(Playlist playlist) {
       this.myPlaylists.remove(playlist);
    }
-
+   
    @ManyToMany(fetch = FetchType.EAGER)
    @JoinTable(name = "student_roles", joinColumns = @JoinColumn(name = "student_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
-   private Set<Roles> roles = new HashSet<>();
+   private Set<Roles> roles = new LinkedHashSet<>();
 
    public void addRole(Roles role) {
       this.roles.add(role);
