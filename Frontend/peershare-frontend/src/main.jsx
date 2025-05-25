@@ -4,7 +4,6 @@ import "./index.css";
 import { createBrowserRouter, Navigate, RouterProvider } from "react-router-dom";
 import Home from "./components/Home.jsx";
 import SignIn from "./components/SignIn.jsx";
-import SignUp from "./components/SignUp.jsx";
 import Dashboard from "./components/Dashboard.jsx";
 import Peer from "./components/Peer.jsx";
 import Playlist from "./components/playlist/Playlist.jsx";
@@ -17,6 +16,7 @@ import MyPlaylistInfo from "./components/my-playlists/MyPlaylistInfo.jsx";
 import MyVideoSection from "./components/my-playlists/MyVideoSection.jsx";
 import AiSummarizer from "./components/ai-summarizer/AiSummarizer.jsx";
 import ChatbotSummarizer from "./components/ai-summarizer/ChatbotSummarizer.jsx";
+import SignUp from "./signup/SignUp.jsx";
 
 const router = createBrowserRouter([
    {

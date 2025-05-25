@@ -153,9 +153,9 @@ prompt-${input}`;
          className={`fixed right-4 bottom-20 w-80 h-96 flex flex-col bg-white rounded-lg shadow-xl border border-gray-200 z-50 ${
             maximized ? "fixed top-4 left-4 right-4 bottom-4 w-auto h-auto" : ""
          }`}>
-         <div className="flex items-center justify-between p-3 bg-blue-500 text-white rounded-t-lg">
-            <h3 className="text-lg font-semibold">Gemini Chat</h3>
-            <div className="flex gap-2 items-center">
+         <div className="flex items-center justify-between p-3 text-white bg-blue-500 rounded-t-lg">
+            <h3 className="text-lg font-semibold">Peershare Chat</h3>
+            <div className="flex items-center gap-2">
                <a
                   href="https://www.markdownguide.org/basic-syntax/"
                   target="_blank"
@@ -169,7 +169,7 @@ prompt-${input}`;
             </div>
          </div>
 
-         <div className="flex-grow p-3 overflow-y-auto space-y-2">
+         <div className="flex-grow p-3 space-y-2 overflow-y-auto">
             {messages.map((m, idx) => (
                <div
                   key={idx}

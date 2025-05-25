@@ -93,46 +93,46 @@ const MyPlaylistInfo = () => {
    }
 
    return (
-      <div className="flex flex-col md:flex-row gap-6 p-6 bg-white text-black min-h-screen mt-20">
+      <div className="flex flex-col min-h-screen gap-6 p-6 mt-20 text-black bg-white md:flex-row">
          {/* Left Section (Playlist Info) */}
          {playlistDetails && (
-            <div className="bg-gray-100 p-5 rounded-lg w-full md:w-1/3 shadow-md border border-gray-300">
+            <div className="w-full p-5 bg-gray-100 border border-gray-300 rounded-lg shadow-md md:w-1/3">
                <img
                   src={playlistDetails.snippet.thumbnails.high.url}
                   alt="Playlist Thumbnail"
-                  className="rounded-lg w-full"
+                  className="w-full rounded-lg"
                />
-               <h1 className="text-2xl font-bold mt-3">{playlistDetails.snippet.title}</h1>
+               <h1 className="mt-3 text-2xl font-bold">{playlistDetails.snippet.title}</h1>
                <p className="text-gray-600">
                   {playlistDetails.snippet.channelTitle} • {playlistDetails.contentDetails.itemCount} videos
                </p>
-               <p className="text-gray-500 text-sm mt-1">
+               <p className="mt-1 text-sm text-gray-500">
                   Last updated: {new Date(playlistDetails.snippet.publishedAt).toDateString()}
                </p>
 
                {/* New Buttons */}
-               <div className="flex gap-3 mt-4 flex-col">
+               <div className="flex flex-col gap-3 mt-4">
                   <a
                      href={`https://www.youtube.com/playlist?list=${playlistUrl}`}
                      target="_blank"
                      rel="noopener noreferrer"
-                     className="bg-red-600 text-white px-6 py-2 rounded-lg font-semibold shadow-md hover:bg-red-700">
+                     className="px-6 py-2 font-semibold text-white bg-red-600 rounded-lg shadow-md hover:bg-red-700">
                      ▶ Open on YouTube
                   </a>
                   <button
                      onClick={handleShare}
-                     className="bg-gray-200 text-black px-6 py-2 rounded-lg shadow-md hover:bg-gray-300">
+                     className="px-6 py-2 text-black bg-gray-200 rounded-lg shadow-md hover:bg-gray-300">
                      📤 Share Playlist
                   </button>
-                  <button
+                  {/* <button
                      onClick={summarizeLectures}
-                     className="bg-gray-200 text-black px-6 py-2 rounded-lg shadow-md hover:bg-blue-400">
+                     className="px-6 py-2 text-black bg-gray-200 rounded-lg shadow-md hover:bg-blue-400">
                      🤖 Generate Summary
-                  </button>
+                  </button> */}
                </div>
 
                {/* Description with Scroll */}
-               {/* <div className="mt-4 max-h-32 overflow-y-auto text-gray-700 scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-200">
+               {/* <div className="mt-4 overflow-y-auto text-gray-700 max-h-32 scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-200">
                   {playlistDetails.snippet.description}
                </div> */}
             </div>
@@ -141,9 +141,9 @@ const MyPlaylistInfo = () => {
          {/* Right Section (Playlist Videos) with SCROLL */}
          <div className="w-full md:w-2/3 h-[620px] overflow-y-auto scrollbar-thin scrollbar-thumb-gray-400 scrollbar-track-gray-200">
             {loading ? (
-               <p className="text-center text-lg">Loading videos...</p>
+               <p className="text-lg text-center">Loading videos...</p>
             ) : error ? (
-               <p className="text-red-500 text-center">{error}</p>
+               <p className="text-center text-red-500">{error}</p>
             ) : videos.length === 0 ? (
                <p className="text-center text-gray-600">No videos found.</p>
             ) : (
@@ -153,7 +153,7 @@ const MyPlaylistInfo = () => {
                         video.snippet.resourceId.videoId
                      }&lecture-no=${index + 1}`}
                      key={video.id}
-                     className="flex items-center gap-4 mb-4 bg-gray-100 p-3 rounded-lg shadow-md border border-gray-300 hover:bg-gray-200 transition">
+                     className="flex items-center gap-4 p-3 mb-4 transition bg-gray-100 border border-gray-300 rounded-lg shadow-md hover:bg-gray-200">
                      <img
                         src={video.snippet.thumbnails.medium.url}
                         alt="Video Thumbnail"

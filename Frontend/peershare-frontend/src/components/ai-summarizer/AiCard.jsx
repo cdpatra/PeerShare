@@ -78,10 +78,10 @@ function AiCard({ playlistData}) {
                <div className="no-of-lectures">{playlistCardData?.contentDetails?.itemCount} Lectures</div>
             </div>
             <div className="flex items-center gap-2 rating-add-button-container">
-               <div className="flex items-center gap-1 px-3 py-1 border rating bg-neutral-200 border-neutral-300 text-neutral-700 rounded-2xl">
+               {/* <div className="flex items-center gap-1 px-3 py-1 border rating bg-neutral-200 border-neutral-300 text-neutral-700 rounded-2xl">
                   <img src="/images/star.png" alt="rating stars" className="w-5" />
                   {review}
-               </div>
+               </div> */}
                {/* <button onClick={removePlaylistHandler} className="px-4 py-2 border rounded-md add-button bg-cyan-400 border-cyan-500 hover:bg-cyan-500">
                  Remove
                </button> */}

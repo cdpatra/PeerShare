@@ -4,7 +4,7 @@ import axios from "axios";
 import { HiThumbUp } from "react-icons/hi";
 
 function PlaylistCard({ fetchPlaylists, playlistData }) {
-   const { playlistId, playlistURL, categoryName, review } = playlistData;
+   const { playlistId, playlistURL, categoryName } = playlistData;
    const [playlistCardData, setPlaylistCardData] = useState([]);
    const [added, setAdded] = useState(false);
 
@@ -99,7 +99,7 @@ function PlaylistCard({ fetchPlaylists, playlistData }) {
             <div className="flex items-center gap-2 rating-add-button-container">
                <div
                   onClick={upvoteHandler}
-                  className="flex items-center gap-1 p-1 border rating bg-neutral-200 border-neutral-300 text-neutral-700 rounded-2xl cursor-pointer hover:bg-neutral-300">
+                  className="flex items-center gap-1 p-1 border cursor-pointer rating bg-neutral-200 border-neutral-300 text-neutral-700 rounded-2xl hover:bg-neutral-300">
                   <HiThumbUp
                      className={`text-xl ${
                         playlistData?.upvotedRollNos?.includes(localStorage.getItem("rollNo"))
@@ -107,7 +107,7 @@ function PlaylistCard({ fetchPlaylists, playlistData }) {
                           : "text-neutral-400"
                       }`}
                   />
-                  {review}
+                  {playlistData?.upvotedRollNos.length}
                </div>
                <button
                   onClick={addPlaylistHandler}

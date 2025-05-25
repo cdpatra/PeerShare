@@ -4,12 +4,12 @@ import { MdDarkMode } from "react-icons/md";
 
 export default function NavBar() {
    return (
-      <nav className="fixed backdrop-blur-md w-full z-50 dark:text-white dark:bg-transparent flex items-center px-4 border-2 border-slate-500 justify-between">
-         <Link to={"/"} className="logo flex-col justify-items-center m-2">
+      <nav className="fixed z-50 flex items-center justify-between w-full px-4 border-2 backdrop-blur-md dark:text-white dark:bg-transparent border-slate-500">
+         <Link to={"/"} className="flex-col m-2 logo justify-items-center">
             <img src={logo} alt="logo" className="h-12" />
-            <div className="name flex flex-nowrap">
+            <div className="flex name flex-nowrap">
                <span className="font-playWrite">PeerShare</span>
-               <span className=" inline-block text-logoGreen text-4xl -mt-4">.</span>
+               <span className="inline-block -mt-4 text-4xl text-logoGreen">.</span>
             </div>
          </Link>
          <ul className="flex gap-14">
@@ -23,8 +23,8 @@ export default function NavBar() {
                <a href="#footer">Contact</a>
             </li>
          </ul>
-         <div className="buttons flex items-center">
-            <MdDarkMode className="text-3xl mr-4" />
+         <div className="flex items-center buttons">
+            
             {localStorage.getItem("token") ? (
                <Link
                   to={"/dashboard"}
