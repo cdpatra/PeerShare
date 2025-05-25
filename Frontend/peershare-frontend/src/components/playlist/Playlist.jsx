@@ -12,7 +12,6 @@ function Playlist() {
 
    const filterRef = useRef(); // Ref for detecting outside click
 
-   console.log(categories);
    const fetchPlaylists = async () => {
       try {
          const token = localStorage.getItem("token");
@@ -32,8 +31,7 @@ function Playlist() {
          }
 
          const playlistData = await response.json();
-
-         // setPlaylistData(playlistData);
+         console.log(playlistData);
 
          //fetching studentdto playlist
          const studentResponse = await fetch(`http://localhost:8080/users/student/${studentId}`, {
@@ -48,22 +46,22 @@ function Playlist() {
             throw new Error(`Student API error! Status: ${studentResponse.status}`);
          }
 
-         const studentData = await studentResponse.json();
-         const addedPlaylists = studentData.myPlaylistsDtos.map((obj) => {
-            obj.added = true;
-            return obj;
-         });
+         const { myPlaylistsDtos: studentPlaylists } = await studentResponse.json();
+         console.log(studentPlaylists);
 
-         const mergedArray = [
-            ...addedPlaylists,
-            ...playlistData.filter(
-               (smallObj) => !addedPlaylists.some((bigObj) => bigObj.playlistId === smallObj.playlistId)
-            ),
-         ];
+         let playlistsToDisplay = [];
+         for (let playlistObj of playlistData) {
+            const isAdded = studentPlaylists.some(
+               (studentPlaylistObj) => studentPlaylistObj.playlistId === playlistObj.playlistId
+            );
+            if (isAdded) {
+               playlistObj.added = true;
+            }
+            playlistsToDisplay = [...playlistsToDisplay, playlistObj];
+         }
 
-         setPlaylistData(mergedArray);
+         setPlaylistData(playlistsToDisplay);
 
-         // Fetching all category data
          const { data } = await axios.get("http://localhost:8080/users/category", {
             headers: {
                Authorization: `Bearer ${token}`,
