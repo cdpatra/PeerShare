@@ -4,9 +4,10 @@ import axios from "axios";
 import { HiThumbUp } from "react-icons/hi";
 
 function PlaylistCard({ fetchPlaylists, playlistData }) {
-   const { playlistId, playlistURL, categoryName } = playlistData;
+   const { playlistId, playlistURL, categoryId } = playlistData;
    const [playlistCardData, setPlaylistCardData] = useState([]);
    const [added, setAdded] = useState(false);
+   const [categoryName, setCategoryName] = useState();
 
    const addPlaylistHandler = async () => {
       const studentId = localStorage.getItem("rollNo");
@@ -65,6 +66,7 @@ function PlaylistCard({ fetchPlaylists, playlistData }) {
    };
 
    useEffect(() => {
+      const token = localStorage.getItem("token");
       (async () => {
          const API_KEY = "AIzaSyCZBUxV9M35c_dijr_O70-EpYey-VFhRKw";
          try {
@@ -73,15 +75,28 @@ function PlaylistCard({ fetchPlaylists, playlistData }) {
             );
             const data = await response.json();
             setPlaylistCardData(data.items[0]);
+
+            const categoryData = await axios.put(
+               `http://localhost:8080/users/category/${categoryId}`,
+               {},
+               {
+                  headers: {
+                     Authorization: `Bearer ${token}`,
+                  },
+               }
+            );
+            setCategoryName(categoryData.data.categoryName);
          } catch (error) {
             console.error(error.message);
          }
       })();
    }, []);
 
-   
    return (
-      <div className="flex flex-col justify-between p-2 overflow-hidden border shadow-md bg-neutral-100 rounded-xl border-neutral-300">
+      <div className="relative flex flex-col justify-between p-2 overflow-hidden border shadow-md bg-neutral-100 rounded-xl border-neutral-300">
+         <div className="category-tag absolute shadow-2xl top-4 left-4 text-black bg-neutral-200 text-sm px-4 border border-neutral-400 rounded-full">
+            {categoryName}
+         </div>
          <Link to={`/dashboard/playlist/${playlistURL}/${playlistId}`}>
             <img
                className="mb-2 border rounded-xl border-neutral-300"
@@ -93,7 +108,7 @@ function PlaylistCard({ fetchPlaylists, playlistData }) {
          <div className="text-sm instructor-name text-neutral-500">{playlistCardData?.snippet?.channelTitle}</div>
          <div className="flex items-center justify-between lower-section">
             <div className="my-2 playlist-info text-neutral-600">
-               <div className="category-name ">{categoryName}</div>
+               {/* <div className="category-name ">{categoryName}</div> */}
                <div className="no-of-lectures">{playlistCardData?.contentDetails?.itemCount} Lectures</div>
             </div>
             <div className="flex items-center gap-2 rating-add-button-container">
@@ -103,9 +118,9 @@ function PlaylistCard({ fetchPlaylists, playlistData }) {
                   <HiThumbUp
                      className={`text-xl ${
                         playlistData?.upvotedRollNos?.includes(localStorage.getItem("rollNo"))
-                          ? "text-emerald-400"
-                          : "text-neutral-400"
-                      }`}
+                           ? "text-emerald-400"
+                           : "text-neutral-400"
+                     }`}
                   />
                   {playlistData?.upvotedRollNos.length}
                </div>

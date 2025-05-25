@@ -17,6 +17,7 @@ import MyVideoSection from "./components/my-playlists/MyVideoSection.jsx";
 import AiSummarizer from "./components/ai-summarizer/AiSummarizer.jsx";
 import ChatbotSummarizer from "./components/ai-summarizer/ChatbotSummarizer.jsx";
 import SignUp from "./signup/SignUp.jsx";
+import TopVotedPlaylists from "./components/top-voted-playlists/TopVotedPlaylists.jsx";
 
 const router = createBrowserRouter([
    {
@@ -72,19 +73,21 @@ const router = createBrowserRouter([
             element: <MyVideoSection />,
          },
          {
+            path: "top-voted-playlist",
+            element: <TopVotedPlaylists />,
+         },
+         {
             path: "contribute-playlist",
             element: <ContributePlaylist />,
          },
          {
             path: "ai-summarizer",
-            element: <AiSummarizer />, 
-              
-
+            element: <AiSummarizer />,
          },
          {
             path: "ai-summarizer/:playlist-id",
-            element: <ChatbotSummarizer />, 
-         } 
+            element: <ChatbotSummarizer />,
+         },
       ],
    },
 ]);

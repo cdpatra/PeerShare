@@ -22,17 +22,14 @@ import ChevronLeftIcon from "@mui/icons-material/ChevronLeft";
 import ChevronRightIcon from "@mui/icons-material/ChevronRight";
 import HomeIcon from "@mui/icons-material/Home";
 import PlaylistAddIcon from "@mui/icons-material/PlaylistAdd";
-import NoteIcon from "@mui/icons-material/Note";
 import PeopleIcon from "@mui/icons-material/People";
-import CategoryIcon from "@mui/icons-material/Category";
 import Brightness7Icon from "@mui/icons-material/Brightness7";
 import NightlightRoundIcon from "@mui/icons-material/NightlightRound";
 import { Navigate, Outlet, useNavigate } from "react-router-dom";
 import CollectionsBookmarkIcon from "@mui/icons-material/CollectionsBookmark";
 import AddBoxIcon from "@mui/icons-material/AddBox";
-import AiSummarizer from "./ai-summarizer/AiSummarizer";
 import AutoAwesomeIcon from "@mui/icons-material/AutoAwesome";
-
+import { MdHowToVote } from "react-icons/md";
 
 const drawerWidth = 240;
 
@@ -79,7 +76,15 @@ export default function Dashboard() {
          </DrawerHeader>
          <Divider />
          <List>
-            {["Home", "Playlist", "Peer", "My playlists", "Contribute Playlist", "AI Summarizer"].map((text) => (
+            {[
+               "Home",
+               "Playlist",
+               "Peer",
+               "My playlists",
+               "Top Voted Playlists",
+               "Contribute Playlist",
+               "AI Summarizer",
+            ].map((text) => (
                <ListItem key={text} disablePadding>
                   <ListItemButton
                      onClick={() => {
@@ -87,6 +92,7 @@ export default function Dashboard() {
                         if (text === "Peer") navigate("/dashboard/peer");
                         if (text === "Playlist") navigate("/dashboard/playlist");
                         if (text === "My playlists") navigate("/dashboard/my-playlists");
+                        if (text === "Top Voted Playlists") navigate("/dashboard/top-voted-playlist");
                         if (text == "Contribute Playlist") navigate("/dashboard/contribute-playlist");
                         if (text == "AI Summarizer") navigate("/dashboard/ai-summarizer");
                      }}>
@@ -95,6 +101,7 @@ export default function Dashboard() {
                         {text === "Playlist" && <PlaylistAddIcon />}
                         {text === "Peer" && <PeopleIcon />}
                         {text == "My playlists" && <CollectionsBookmarkIcon />}
+                        {text == "Top Voted Playlists" && <MdHowToVote className="text-2xl scale-125" />}
                         {text == "Contribute Playlist" && <AddBoxIcon />}
                         {text == "AI Summarizer" && <AutoAwesomeIcon />}
                      </ListItemIcon>

@@ -12,6 +12,7 @@ function Playlist() {
 
    const filterRef = useRef(); // Ref for detecting outside click
 
+   console.log(categories);
    const fetchPlaylists = async () => {
       try {
          const token = localStorage.getItem("token");
