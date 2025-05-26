@@ -18,6 +18,7 @@ export default function SignIn() {
          localStorage.setItem("firstName", student.firstName);
          localStorage.setItem("lastName", student.lastName);
          localStorage.setItem("token", res.data.jwttoken);
+         localStorage.setItem("profilePhoto", student.profilePhoto);
          navigate("/dashboard");
       } catch (err) {
          console.log("post error:", err);

@@ -18,6 +18,7 @@ import AiSummarizer from "./components/ai-summarizer/AiSummarizer.jsx";
 import ChatbotSummarizer from "./components/ai-summarizer/ChatbotSummarizer.jsx";
 import SignUp from "./signup/SignUp.jsx";
 import TopVotedPlaylists from "./components/top-voted-playlists/TopVotedPlaylists.jsx";
+import Profile from "./components/profile/Profile.jsx";
 
 const router = createBrowserRouter([
    {
@@ -87,6 +88,10 @@ const router = createBrowserRouter([
          {
             path: "ai-summarizer/:playlist-id",
             element: <ChatbotSummarizer />,
+         },
+         {
+            path: "profile/:roll-no",
+            element: <Profile />,
          },
       ],
    },

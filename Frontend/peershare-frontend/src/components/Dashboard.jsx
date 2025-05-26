@@ -12,7 +12,6 @@ import {
    ListItemIcon,
    ListItemText,
    Divider,
-   Avatar,
    useMediaQuery,
    Button,
 } from "@mui/material";
@@ -30,6 +29,7 @@ import CollectionsBookmarkIcon from "@mui/icons-material/CollectionsBookmark";
 import AddBoxIcon from "@mui/icons-material/AddBox";
 import AutoAwesomeIcon from "@mui/icons-material/AutoAwesome";
 import { MdHowToVote } from "react-icons/md";
+import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 
 const drawerWidth = 240;
 
@@ -140,7 +140,19 @@ export default function Dashboard() {
                   <Button color="inherit" onClick={() => logout(!darkMode)}>
                      Logout
                   </Button>
-                  <Avatar sx={{ ml: 2 }} />
+                  {localStorage.getItem("profilePhoto").length===0 ? (
+                     <AccountCircleIcon
+                        sx={{ ml: 2 }}
+                        className="cursor-pointer scale-150"
+                        onClick={() => navigate(`profile/${localStorage.getItem("rollNo")}`)}
+                     />
+                  ) : (
+                     <img
+                        src={`${localStorage.getItem("profilePhoto")}`}
+                        className="cursor-pointer w-10 h-10 overflow-hidden rounded-full border-2 border-white"
+                        onClick={() => navigate(`profile/${localStorage.getItem("rollNo")}`)}
+                     />
+                  )}
                </Toolbar>
             </AppBar>
 
