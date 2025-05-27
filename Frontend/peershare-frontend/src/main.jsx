@@ -19,11 +19,17 @@ import ChatbotSummarizer from "./components/ai-summarizer/ChatbotSummarizer.jsx"
 import SignUp from "./signup/SignUp.jsx";
 import TopVotedPlaylists from "./components/top-voted-playlists/TopVotedPlaylists.jsx";
 import Profile from "./components/profile/Profile.jsx";
+import { ToastContainer } from "react-toastify";
 
 const router = createBrowserRouter([
    {
       path: "/",
-      element: <App />,
+      element: (
+         <>
+            <App />
+            <ToastContainer position="bottom-center" theme="colored" />
+         </>
+      ),
       children: [
          {
             path: "/",
@@ -41,7 +47,12 @@ const router = createBrowserRouter([
    },
    {
       path: "/dashboard",
-      element: <Dashboard />,
+      element: (
+         <>
+            <Dashboard />
+            <ToastContainer position="bottom-center" theme="colored" />
+         </>
+      ),
       children: [
          { index: true, element: <Navigate to="playlist" replace /> },
          { path: "peer", element: <Peer /> },

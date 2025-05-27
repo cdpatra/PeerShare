@@ -3,9 +3,17 @@ import logo from "../assets/images/logo.svg";
 import { MdDarkMode } from "react-icons/md";
 
 export default function NavBar() {
+   // Function to scroll to top
+   const scrollToTop = () => {
+      window.scrollTo({
+         top: 0,
+         behavior: "smooth", // Optional: adds smooth scrolling
+      });
+   };
+
    return (
       <nav className="fixed z-50 flex items-center justify-between w-full px-4 border-2 backdrop-blur-md dark:text-white dark:bg-transparent border-slate-500">
-         <Link to={"/"} className="flex-col m-2 logo justify-items-center">
+         <Link to={"/"} className="flex-col m-2 logo justify-items-center" onClick={scrollToTop}>
             <img src={logo} alt="logo" className="h-12" />
             <div className="flex name flex-nowrap">
                <span className="font-playWrite">PeerShare</span>
@@ -14,17 +22,18 @@ export default function NavBar() {
          </Link>
          <ul className="flex gap-14">
             <li>
-               <Link to={"/"}>Home</Link>
+               <Link to={"/"} onClick={scrollToTop}>
+                  Home
+               </Link>
             </li>
             <li>
-               <a href="#footer">About</a>
+               <a href="/#about">About</a>
             </li>
             <li>
-               <a href="#footer">Contact</a>
+               <a href="/#contact">Contact</a>
             </li>
          </ul>
          <div className="flex items-center buttons">
-            
             {localStorage.getItem("token") ? (
                <Link
                   to={"/dashboard"}

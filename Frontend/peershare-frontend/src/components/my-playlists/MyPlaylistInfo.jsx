@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 const API_KEY = "AIzaSyCZBUxV9M35c_dijr_O70-EpYey-VFhRKw"; // ⚠️ Replace with your actual API key
 
@@ -46,7 +47,7 @@ const MyPlaylistInfo = () => {
    const handleShare = () => {
       const shareUrl = `https://www.youtube.com/playlist?list=${playlistUrl}`;
       navigator.clipboard.writeText(shareUrl);
-      alert("Playlist link copied to clipboard!");
+      toast.success("Playlist link copied to clipboard!");
    };
 
    // Function to handle the "Generate Summary" button click
@@ -88,7 +89,7 @@ const MyPlaylistInfo = () => {
          console.log(data?.candidates?.[0]?.content?.parts?.[0]?.text || "No summary received.");
       } catch (error) {
          console.error("Error summarizing lectures:", error);
-         alert("Error summarizing lectures. Please try again later.");
+         toast.error("Error summarizing lectures. Please try again later.");
       }
    }
 

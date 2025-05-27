@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 export const ContributePlaylist = () => {
    const [playlistUrl, setPlaylistUrl] = useState("");
@@ -43,7 +44,7 @@ export const ContributePlaylist = () => {
       const playlistId = extractPlaylistId(playlistUrl);
 
       if (!playlistId || !selectedCategoryId) {
-         alert("Please fill out all fields correctly.");
+         toast.error("Please fill out all fields correctly.");
          return;
       }
       try {
@@ -63,20 +64,19 @@ export const ContributePlaylist = () => {
             }
          );
 
-         alert("Playlist saved successfully!");
+         toast.success("Playlist saved successfully!");
 
          setPlaylistUrl("");
          setInstructorName("");
          setSelectedCategoryId("");
       } catch (error) {
          console.error("Error saving playlist:", error);
-         // alert("Failed to save playlist");
-         alert(error.response.data.message);
+         toast.error(error.response.data.message);
       }
    };
 
    return (
-      <div className="flex items-center justify-center h-screen bg-gradient-to-tr from-[#e0f2fe] via-[#f0f9ff] to-[#dbeafe] px-4">
+      <div className="flex items-center justify-center h-screen px-4">
          <motion.div
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}

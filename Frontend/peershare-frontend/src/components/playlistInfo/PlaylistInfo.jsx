@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const API_KEY = "AIzaSyCZBUxV9M35c_dijr_O70-EpYey-VFhRKw"; // ⚠️ Replace with your actual API key
 
@@ -45,7 +46,7 @@ const PlaylistInfo = () => {
    const handleShare = () => {
       const shareUrl = `https://www.youtube.com/playlist?list=${playlistUrl}`;
       navigator.clipboard.writeText(shareUrl);
-      alert("Playlist link copied to clipboard!");
+      toast.success("Playlist link copied to clipboard!");
    };
 
    return (

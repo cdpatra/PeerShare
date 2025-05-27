@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import TagsInputBox from "./TagsInputBox";
 import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
 
 export default function SignUp() {
    const navigate = useNavigate();
@@ -29,7 +30,7 @@ export default function SignUp() {
       event.preventDefault();
 
       try {
-         const res = await axios.post("http://localhost:8080/auth/register", student);
+         await axios.post("http://localhost:8080/auth/register", student);
          setStudent({
             rollNo: "",
             firstName: "",
@@ -43,8 +44,10 @@ export default function SignUp() {
             description: "",
          });
          navigate("/sign-in");
+         toast.success("Registration Successful.");
       } catch (err) {
          console.log("post error:", err);
+         toast.error("Failed to register");
       }
    };
 
@@ -58,12 +61,11 @@ export default function SignUp() {
          const response = await axios.post("https://api.cloudinary.com/v1_1/dwgwsur6y/image/upload", formData);
          const uploadedUrl = response.data.secure_url;
          console.log(uploadedUrl);
-      setStudent((prev) => ({ ...prev, profilePhoto: uploadedUrl }));
+         setStudent((prev) => ({ ...prev, profilePhoto: uploadedUrl }));
       } catch (error) {
          console.error("Upload error", error);
       }
    };
-   
 
    return (
       <section className="px-2 bg-gray-50 dark:bg-gray-900">

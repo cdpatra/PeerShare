@@ -75,7 +75,7 @@ function MyPlaylistCard({ playlistData, fetchStudentData }) {
                </div> */}
                <button
                   onClick={removePlaylistHandler}
-                  className="px-4 py-2 border rounded-md add-button bg-cyan-400 border-cyan-500 hover:bg-cyan-500">
+                  className="px-4 py-2 border rounded-md add-button bg-[#1976d2] text-white border-cyan-500 hover:bg-cyan-500">
                   Remove
                </button>
             </div>

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useLocation, useParams } from "react-router-dom";
 import ReactPlayer from "react-player/youtube";
+import { toast } from "react-toastify";
 
 const API_KEY = "AIzaSyCZBUxV9M35c_dijr_O70-EpYey-VFhRKw";
 
@@ -116,14 +117,14 @@ const MyVideoSection = () => {
          const data = await response.json();
          console.log(data);
          if (response.ok) {
-            alert("Notes saved successfully!");
+            toast.success("Notes saved successfully!");
             fetchNotes();
          } else {
             throw new Error(data.message || "Failed to save notes");
          }
       } catch (err) {
          console.error("Error saving notes:", err);
-         alert("Failed to save notes: " + err.message);
+         toast.error("Failed to save notes: " + err.message);
       }
    };
 

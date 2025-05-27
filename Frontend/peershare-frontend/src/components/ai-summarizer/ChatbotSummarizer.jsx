@@ -8,6 +8,7 @@ import { ImSpinner8 } from "react-icons/im";
 import ReactMarkdown from "react-markdown";
 import html2canvas from "html2canvas";
 import { jsPDF } from "jspdf";
+import { toast } from "react-toastify";
 
 function ChatbotSummarizer() {
    const playlistId = useParams()["playlist-id"];
@@ -124,10 +125,10 @@ Formatted Markdown output:`;
       try {
          setNotes(editedNotes);
          setIsEditing(false);
-         alert("Notes saved successfully!");
+         toast.success("Notes saved successfully!");
       } catch (error) {
          console.error("Error saving notes:", error);
-         alert("Failed to save notes");
+         toast.error("Failed to save notes");
       }
    };
 
@@ -182,7 +183,7 @@ Formatted Markdown output:`;
          pdf.save("lecture-notes.pdf");
       } catch (error) {
          console.error("Error generating PDF:", error);
-         alert("Failed to download PDF");
+         toast.error("Failed to download PDF");
       } finally {
          setIsLoading(false);
       }

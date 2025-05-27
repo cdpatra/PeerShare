@@ -31,7 +31,7 @@ function AiSummarizer() {
    useEffect(()=>{fetchStudentData()},[]);
    return(
    <>
-      <div className="flex flex-col items-center h-screen mb-1 bg-gray-100">
+      <div className="flex flex-col items-center h-screen mb-1">
          <h1 className="mb-4 text-4xl font-bold">AI Summarizer</h1>
          <p className="mb-4 text-xl">Summarize your playlists with AI!</p>
          <div className="flex flex-col w-full gap-6 p-6">

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import {
    Box,
    CssBaseline,
@@ -24,12 +24,13 @@ import PlaylistAddIcon from "@mui/icons-material/PlaylistAdd";
 import PeopleIcon from "@mui/icons-material/People";
 import Brightness7Icon from "@mui/icons-material/Brightness7";
 import NightlightRoundIcon from "@mui/icons-material/NightlightRound";
-import { Navigate, Outlet, useNavigate } from "react-router-dom";
+import { Navigate, Outlet, useNavigate, useLocation } from "react-router-dom";
 import CollectionsBookmarkIcon from "@mui/icons-material/CollectionsBookmark";
 import AddBoxIcon from "@mui/icons-material/AddBox";
 import AutoAwesomeIcon from "@mui/icons-material/AutoAwesome";
 import { MdHowToVote } from "react-icons/md";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
+import { toast } from "react-toastify";
 
 const drawerWidth = 240;
 
@@ -50,9 +51,11 @@ const DrawerHeader = styled("div")(({ theme }) => ({
 export default function Dashboard() {
    const theme = useTheme();
    const navigate = useNavigate();
+   const location = useLocation();
    const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
    const [mobileOpen, setMobileOpen] = useState(false);
    const [darkMode, setDarkMode] = useState(false);
+   const [activePath, setActivePath] = useState("");
 
    const modetheme = createTheme({
       palette: {
@@ -60,9 +63,28 @@ export default function Dashboard() {
       },
    });
 
+   useEffect(() => {
+      // Update active path when location changes
+      setActivePath(location.pathname);
+   }, [location]);
+
    const handleDrawerToggle = () => {
       setMobileOpen(!mobileOpen);
    };
+
+   const menuItems = [
+      { text: "Home", path: "/", icon: <HomeIcon /> },
+      { text: "Playlist", path: "/dashboard/playlist", icon: <PlaylistAddIcon /> },
+      { text: "Peer", path: "/dashboard/peer", icon: <PeopleIcon /> },
+      { text: "My playlists", path: "/dashboard/my-playlists", icon: <CollectionsBookmarkIcon /> },
+      {
+         text: "Top Voted Playlists",
+         path: "/dashboard/top-voted-playlist",
+         icon: <MdHowToVote className="text-2xl scale-125" />,
+      },
+      { text: "Contribute Playlist", path: "/dashboard/contribute-playlist", icon: <AddBoxIcon /> },
+      { text: "AI Summarizer", path: "/dashboard/ai-summarizer", icon: <AutoAwesomeIcon /> },
+   ];
 
    const drawerContent = (
       <>
@@ -76,36 +98,34 @@ export default function Dashboard() {
          </DrawerHeader>
          <Divider />
          <List>
-            {[
-               "Home",
-               "Playlist",
-               "Peer",
-               "My playlists",
-               "Top Voted Playlists",
-               "Contribute Playlist",
-               "AI Summarizer",
-            ].map((text) => (
-               <ListItem key={text} disablePadding>
+            {menuItems.map((item) => (
+               <ListItem key={item.text} disablePadding>
                   <ListItemButton
+                     selected={activePath === item.path}
                      onClick={() => {
-                        if (text === "Home") navigate("/");
-                        if (text === "Peer") navigate("/dashboard/peer");
-                        if (text === "Playlist") navigate("/dashboard/playlist");
-                        if (text === "My playlists") navigate("/dashboard/my-playlists");
-                        if (text === "Top Voted Playlists") navigate("/dashboard/top-voted-playlist");
-                        if (text == "Contribute Playlist") navigate("/dashboard/contribute-playlist");
-                        if (text == "AI Summarizer") navigate("/dashboard/ai-summarizer");
+                        navigate(item.path);
+                        if (isMobile) setMobileOpen(false);
+                     }}
+                     sx={{
+                        "&.Mui-selected": {
+                           backgroundColor:
+                              theme.palette.mode === "dark"
+                                 ? theme.palette.primary.dark
+                                 : theme.palette.primary.light,
+                           color: theme.palette.primary.contrastText,
+                           "&:hover": {
+                              backgroundColor:
+                                 theme.palette.mode === "dark"
+                                    ? theme.palette.primary.dark
+                                    : theme.palette.primary.light,
+                           },
+                        },
                      }}>
-                     <ListItemIcon>
-                        {text === "Home" && <HomeIcon />}
-                        {text === "Playlist" && <PlaylistAddIcon />}
-                        {text === "Peer" && <PeopleIcon />}
-                        {text == "My playlists" && <CollectionsBookmarkIcon />}
-                        {text == "Top Voted Playlists" && <MdHowToVote className="text-2xl scale-125" />}
-                        {text == "Contribute Playlist" && <AddBoxIcon />}
-                        {text == "AI Summarizer" && <AutoAwesomeIcon />}
+                     <ListItemIcon
+                        sx={{ color: activePath === item.path ? theme.palette.primary.contrastText : "inherit" }}>
+                        {item.icon}
                      </ListItemIcon>
-                     <ListItemText primary={text} />
+                     <ListItemText primary={item.text} />
                   </ListItemButton>
                </ListItem>
             ))}
@@ -119,7 +139,7 @@ export default function Dashboard() {
       localStorage.removeItem("firstName");
       localStorage.removeItem("lastName");
       navigate("/");
-      alert("Logout successful");
+      toast.success("Logout successful");
    };
 
    return (
@@ -140,7 +160,7 @@ export default function Dashboard() {
                   <Button color="inherit" onClick={() => logout(!darkMode)}>
                      Logout
                   </Button>
-                  {localStorage.getItem("profilePhoto").length===0 ? (
+                  {localStorage.getItem("profilePhoto").length === 0 ? (
                      <AccountCircleIcon
                         sx={{ ml: 2 }}
                         className="cursor-pointer scale-150"

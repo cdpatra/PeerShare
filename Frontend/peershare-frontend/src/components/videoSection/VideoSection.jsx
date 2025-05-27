@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useLocation, useParams } from "react-router-dom";
 import ReactPlayer from "react-player/youtube";
+import { toast } from "react-toastify";
 
 const API_KEY = "AIzaSyCZBUxV9M35c_dijr_O70-EpYey-VFhRKw";
 
@@ -116,21 +117,15 @@ const VideoSection = () => {
          const data = await response.json();
          console.log(data);
          if (response.ok) {
-            alert("Notes saved successfully!");
+            toast.success("Notes saved successfully!");
             fetchNotes();
          } else {
             throw new Error(data.message || "Failed to save notes");
          }
       } catch (err) {
          console.error("Error saving notes:", err);
-         alert("Failed to save notes: " + err.message);
+         toast.error("Failed to save notes: " + err.message);
       }
-   };
-
-   const handleVideoChange = (index) => {
-      setCurrentVideoIndex(index);
-      // setVideoId(playlistVideos[index].snippet.resourceId.videoId);
-      setNotes("");
    };
 
    if (loading) return <div className="text-center py-10">Loading...</div>;
@@ -138,10 +133,10 @@ const VideoSection = () => {
    if (!videoId) return <div className="text-center py-10">No video selected</div>;
 
    return (
-      <div className="w-full h-screen md:px-16 flex flex-col bg-white text-black">
+      <div className="w-full h-[85vh] px-8 flex flex-col justify-center bg-white text-black">
          {/* Video Section (60%) */}
          <div className="flex-[1] md:flex-[5] px-4">
-            <div className="relative mt-8 h-full rounded-lg overflow-hidden">
+            <div className="relative mt-8 h-[90%] rounded-lg overflow-hidden">
                <ReactPlayer
                   url={`https://www.youtube.com/watch?v=${videoId}`}
                   width="100%"

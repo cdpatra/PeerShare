@@ -6,9 +6,12 @@ import Footer from "./Footer";
 export default function Home() {
    return (
       <>
+         <div id="home" />
          <CanvasBackground />
-         {/* <About /> */}
-         {/* <Contact /> */}
+         <div id="about" className="h-14"></div>
+         <About />
+         <div id="contact" className="h-14"></div>
+         <Contact />
          <Footer />
       </>
    );

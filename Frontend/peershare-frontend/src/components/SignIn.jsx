@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { toast } from "react-toastify";
 
 export default function SignIn() {
    const navigate = useNavigate();
@@ -19,9 +20,11 @@ export default function SignIn() {
          localStorage.setItem("lastName", student.lastName);
          localStorage.setItem("token", res.data.jwttoken);
          localStorage.setItem("profilePhoto", student.profilePhoto);
+         toast.success("Logged in successfully.");
          navigate("/dashboard");
       } catch (err) {
          console.log("post error:", err);
+         toast.error("Failed to login");
       }
    };
 

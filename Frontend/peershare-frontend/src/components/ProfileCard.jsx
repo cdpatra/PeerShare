@@ -16,18 +16,18 @@ const ProfileCard = () => {
    }, []);
 
    return (
-      <div className="min-h-screen px-5 py-10 bg-gray-100">
+      <div className="min-h-screen">
          {Profiledata ? (
             <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
                {Profiledata.slice(0, 9).map((obj) => (
                   <div
-                     className="overflow-hidden bg-white border border-gray-200 rounded-lg shadow-md"
+                     className="overflow-hidden py-2 flex flex-col justify-between bg-white border border-gray-200 rounded-lg shadow-md"
                      key={obj.rollNo}>
-                     <div className="h-40 overflow-hidden">
+                     <div className="flex flex-1 items-center justify-center overflow-hidden">
                         <img
                            src={obj.profilePhoto}
                            alt="ProfilePic_not_available"
-                           className="object-cover w-full h-full"
+                           className="object-cover h-44 w-44 rounded-full overflow-hidden"
                         />
                      </div>
                      <div className="p-5">
@@ -36,7 +36,7 @@ const ProfileCard = () => {
                         </h1>
                         <p className="mt-2 text-gray-600">{`College Name: ${obj.collegeName}`}</p>
                         <p className="text-gray-600">{`Graduation Year: ${obj.graduationYear}`}</p>
-                        <p className="mt-3 text-gray-600">{`Description: ${obj.description}`}</p>
+                        <p className="mt-3 text-gray-600">{`Description: ${obj.description.substring(0,80)}...`}</p>
                         <Link
                            to={`/dashboard/profile/${obj.rollNo}`}
                            type="button"

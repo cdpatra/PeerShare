@@ -126,7 +126,7 @@ function PlaylistCard({ fetchPlaylists, playlistData }) {
                </div>
                <button
                   onClick={addPlaylistHandler}
-                  className="px-4 py-2 border rounded-md add-button bg-cyan-400 border-cyan-500 hover:bg-cyan-500">
+                  className="px-4 py-2 border rounded-md add-button bg-[#1976d2] border-blue-500 text-white hover:bg-blue-500">
                   {playlistData.added || added ? "Added" : "Add"}
                </button>
             </div>
