@@ -36,7 +36,11 @@ const ProfileCard = () => {
                         </h1>
                         <p className="mt-2 text-gray-600">{`College Name: ${obj.collegeName}`}</p>
                         <p className="text-gray-600">{`Graduation Year: ${obj.graduationYear}`}</p>
-                        <p className="mt-3 text-gray-600">{`Description: ${obj.description.substring(0,80)}...`}</p>
+                        <p className="mt-3 text-gray-600">{`Description: ${
+                           obj.description.length
+                              ? obj.description.substring(0, 80) + "..."
+                              : "No Description Available"
+                        }`}</p>
                         <Link
                            to={`/dashboard/profile/${obj.rollNo}`}
                            type="button"
