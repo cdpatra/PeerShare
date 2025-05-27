@@ -24,11 +24,17 @@ const ProfileCard = () => {
                      className="overflow-hidden py-2 flex flex-col justify-between bg-white border border-gray-200 rounded-lg shadow-md"
                      key={obj.rollNo}>
                      <div className="flex flex-1 items-center justify-center overflow-hidden">
-                        <img
-                           src={obj.profilePhoto}
-                           alt="ProfilePic_not_available"
-                           className="object-cover h-44 w-44 rounded-full overflow-hidden"
-                        />
+                        {obj.profilePhoto ? (
+                           <img
+                              src={obj.profilePhoto}
+                              className="object-cover h-44 w-44 rounded-full overflow-hidden"
+                           />
+                        ) : (
+                           <img
+                              src="/images/user-avatar.jpg"
+                              className="object-cover h-44 w-44 rounded-full overflow-hidden"
+                           />
+                        )}
                      </div>
                      <div className="p-5">
                         <h1 className="text-xl font-semibold text-gray-800">
