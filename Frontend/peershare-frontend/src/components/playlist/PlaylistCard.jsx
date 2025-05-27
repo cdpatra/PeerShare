@@ -8,6 +8,7 @@ function PlaylistCard({ fetchPlaylists, playlistData }) {
    const [playlistCardData, setPlaylistCardData] = useState([]);
    const [added, setAdded] = useState(false);
    const [categoryName, setCategoryName] = useState();
+   const [contributerName, setContributerName]=useState("");
 
    const addPlaylistHandler = async () => {
       const studentId = localStorage.getItem("rollNo");
@@ -86,6 +87,16 @@ function PlaylistCard({ fetchPlaylists, playlistData }) {
                }
             );
             setCategoryName(categoryData.data.categoryName);
+            const studentData = await axios.get(
+               `http://localhost:8080/users/student/${playlistData.studentId}`,
+               {
+                  headers: {
+                     Authorization: `Bearer ${token}`,
+                  },
+               }
+            );
+            console.log(studentData.data.firstName);
+            setContributerName(studentData.data.firstName);
          } catch (error) {
             console.error(error.message);
          }
@@ -106,6 +117,7 @@ function PlaylistCard({ fetchPlaylists, playlistData }) {
          </Link>
          <div className="text-xl font-semibold title text-neutral-700">{playlistCardData?.snippet?.title}</div>
          <div className="text-sm instructor-name text-neutral-500">{playlistCardData?.snippet?.channelTitle}</div>
+         <div className="text-sm text-neutral-400">Contributed By: {contributerName}</div>
          <div className="flex items-center justify-between lower-section">
             <div className="my-2 playlist-info text-neutral-600">
                {/* <div className="category-name ">{categoryName}</div> */}

@@ -31,7 +31,6 @@ function Playlist() {
          }
 
          const playlistData = await response.json();
-         console.log(playlistData);
 
          //fetching studentdto playlist
          const studentResponse = await fetch(`http://localhost:8080/users/student/${studentId}`, {

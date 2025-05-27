@@ -18,7 +18,6 @@ export const MyPlaylist = () => {
          });
 
          setMyPlaylistData(response.data.myPlaylistsDtos);
-         console.log("Student Data:", response.data);
       } catch (error) {
          if (error.response) {
             console.error("Error from server:", error.response.data.message);

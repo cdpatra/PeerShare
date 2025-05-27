@@ -6,6 +6,7 @@ import { HiThumbUp } from "react-icons/hi";
 function MyPlaylistCard({ playlistData, fetchStudentData }) {
    const { playlistId, playlistURL, categoryName, review } = playlistData;
    const [playlistCardData, setPlaylistCardData] = useState([]);
+   console.log(playlistData);
 
    const removePlaylistHandler = async () => {
       const studentId = localStorage.getItem("rollNo");
@@ -45,7 +46,6 @@ function MyPlaylistCard({ playlistData, fetchStudentData }) {
                `https://www.googleapis.com/youtube/v3/playlists?part=snippet,contentDetails&id=${playlistURL}&key=${API_KEY}`
             );
             const data = await response.json();
-            console.log(data);
             setPlaylistCardData(data.items[0]);
          } catch (error) {
             console.error(error.message);
@@ -65,14 +65,9 @@ function MyPlaylistCard({ playlistData, fetchStudentData }) {
          <div className="text-sm instructor-name text-neutral-500">{playlistCardData?.snippet?.channelTitle}</div>
          <div className="flex items-center justify-between lower-section">
             <div className="my-2 playlist-info text-neutral-600">
-               <div className="category-name ">{categoryName}</div>
                <div className="no-of-lectures">{playlistCardData?.contentDetails?.itemCount} Lectures</div>
             </div>
             <div className="flex items-center gap-2 rating-add-button-container">
-               {/* <div className="flex items-center gap-1 px-3 py-1 border rating bg-neutral-200 border-neutral-300 text-neutral-700 rounded-2xl">
-                  <HiThumbUp />
-                  {review}
-               </div> */}
                <button
                   onClick={removePlaylistHandler}
                   className="px-4 py-2 border rounded-md add-button bg-[#1976d2] text-white border-cyan-500 hover:bg-cyan-500">
